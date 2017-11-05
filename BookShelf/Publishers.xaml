@@ -1,0 +1,25 @@
+﻿<Window x:Class="BookShelf.Publishers"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookShelf"
+        mc:Ignorable="d"
+        Title="Publishers" Height="300" Width="500">
+    <StackPanel Margin="10">
+        <StackPanel.Resources>
+            <Style TargetType="{x:Type TextBox}">
+                <Setter Property="Margin" Value="0 0 0 10"/>
+            </Style>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+        </StackPanel.Resources>
+        
+        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="30">Name</TextBlock>
+        <TextBox Grid.Row="0" Grid.Column="1" FontSize="30"></TextBox>
+        <TextBlock Grid.Row="1" Grid.Column="0" FontSize="30">City</TextBlock>
+        <TextBox Grid.Row="1" Grid.Column="1" FontSize="30"/>
+        <Button Width="90" Height="40" FontSize="20">Save</Button>
+    </StackPanel>
+</Window>

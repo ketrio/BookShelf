@@ -1,0 +1,98 @@
+﻿<Window x:Class="BookShelf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookShelf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="728"
+        MinWidth="730" MinHeight="460"
+        Name="BooksView">
+    <Window.Resources>
+        <local:ArrayToStringConverter x:Key="ArrayToStringConverter"/>
+    </Window.Resources>
+    <DockPanel LastChildFill="False">
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Load" />
+                <MenuItem Header="Save" />
+                <MenuItem Header="Exit" />
+            </MenuItem>
+            <MenuItem Header="Add">
+                <MenuItem Header="Book" Click="MenuItem_Click"/>
+                <MenuItem Header="Author" Click="MenuItem_Click_2"/>
+                <MenuItem Header="Publisher" Click="MenuItem_Click_1"/>
+            </MenuItem>
+            <MenuItem Header="Sort by">
+                <MenuItem Header="Title"></MenuItem>
+                <MenuItem Header="Author"></MenuItem>
+                <MenuItem Header="Pages count"></MenuItem>
+                <MenuItem Header="Date"></MenuItem>
+            </MenuItem>
+        </Menu>
+
+        <StatusBar DockPanel.Dock="Bottom" VerticalAlignment="Bottom"  Height="20">
+            <StatusBarItem Content="{Binding bookCount}" ContentStringFormat="{}{0} books"/>
+            <StatusBarItem Content="{Binding authorCount}" ContentStringFormat="{}{0} authors"/>
+            <StatusBarItem Content="{Binding publisherCount}" ContentStringFormat="{}{0} publishers"/>
+        </StatusBar>
+
+        <Grid Width="{Binding Width, ElementName=BooksView}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <DataGrid Name="BookGrid" IsReadOnly="True" Grid.Column="0" DockPanel.Dock="Left" ItemsSource="{ Binding books}" AutoGenerateColumns="False" SelectedIndex="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Title}" />
+                    <DataGridTextColumn Header="Author" Binding="{Binding Author}" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DockPanel Grid.Column="1">
+                <ToolBarTray DockPanel.Dock="Top" Height="30">
+                    <ToolBar Width="{Binding ActualWidth,
+                             RelativeSource={RelativeSource FindAncestor,
+                                           AncestorType={x:Type ToolBarTray}}}">
+                        <Button Click="Button_Click_1">Edit</Button>
+                        <Button>Copy</Button>
+                        <Button Click="Button_Click">Delete</Button>
+                    </ToolBar>
+                </ToolBarTray>
+
+                <StackPanel Margin="10" DataContext="{Binding SelectedItem, ElementName=BookGrid, UpdateSourceTrigger=PropertyChanged}">
+                    <Label HorizontalAlignment="Center" FontSize="22" Content="{Binding Title}"></Label>
+                    <Grid Name="BookInfo">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Column="0" Grid.Row="0" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">ISBN:</Label>
+                        <Label Grid.Column="0" Grid.Row="1" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">AUTHOR:</Label>
+                        <Label Grid.Column="0" Grid.Row="2" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">PUBLISHER:</Label>
+                        <Label Grid.Column="0" Grid.Row="3" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">PUBLISHED:</Label>
+                        <Label Grid.Column="0" Grid.Row="4" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">PAGES:</Label>
+                        <Label Grid.Column="0" Grid.Row="5" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">Tags:</Label>
+
+                        <Label Grid.Column="1" Grid.Row="0" FontSize="15" Content="{Binding ISBN}"></Label>
+                        <Label Grid.Column="1" Grid.Row="1" FontSize="15" Content="{Binding Author.name}"></Label>
+                        <Label Grid.Column="1" Grid.Row="2" FontSize="15" Content="{Binding Publisher}"></Label>
+                        <Label Grid.Column="1" Grid.Row="3" FontSize="15" Content="{Binding publishDate}"></Label>
+                        <Label Grid.Column="1" Grid.Row="4" FontSize="15" Content="{Binding pagesCount}"></Label>
+                        <Label Grid.Column="1" Grid.Row="5" Name="would"  Content="{Binding Tags, Converter={StaticResource ArrayToStringConverter}}" FontSize="15"></Label>
+                    </Grid>
+                </StackPanel>
+            </DockPanel>
+        </Grid>
+    </DockPanel>
+</Window>
