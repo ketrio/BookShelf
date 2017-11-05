@@ -13,7 +13,7 @@ namespace Models
         {
             get
             {
-                return _Author;
+                return _author;
             }
             set
             {
@@ -21,7 +21,7 @@ namespace Models
                 {
                     value.books.Add(this);
                 }
-                _Author = value;
+                _author = value;
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Author"));
             }
@@ -31,7 +31,7 @@ namespace Models
         {
             get
             {
-                return _Publisher;
+                return _publisher;
             }
             set
             {
@@ -39,7 +39,7 @@ namespace Models
                 {
                     value.books.Add(this);
                 }
-                _Publisher = value;
+                _publisher = value;
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Publisher"));
             }
@@ -54,7 +54,7 @@ namespace Models
             }
         }
 
-        public DateTime publishDate {
+        public DateTime PublishDate {
             get { return _publishDate; }
             set
             {
@@ -63,14 +63,49 @@ namespace Models
             }
         }
         
-        public String Title { get; set; }
-        public String ISBN { get; set; }
-        public int pagesCount { get; set; }
+        public String Title {
+            get
+            {
+                return _title;
+            }
+            set
+            {
+                _title = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Title"));
+            }
+        }
 
+        public String ISBN {
+            get
+            {
+                return _isbn;
+            }
+            set
+            {
+                _isbn = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ISBN"));
+            }
+        }
+
+        public int Pages {
+            get
+            {
+                return _pagesCount;
+            }
+            set
+            {
+                _pagesCount = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Pages"));
+            }
+        }
+
+        int _pagesCount;
+        String _isbn;
+        String _title;
         DateTime _publishDate;
         String[] _tags;
-        Author _Author;
-        Publisher _Publisher;
+        Author _author;
+        Publisher _publisher;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -82,9 +117,9 @@ namespace Models
             this.ISBN = ISBN;
             this.Author = Author;
             this.Publisher = Publisher;
-            this.pagesCount = pagesCount;
+            this.Pages = pagesCount;
             this.Tags = Tags;
-            this.publishDate = publishDate;
+            this.PublishDate = publishDate;
         }
 
         public override bool Equals(Object obj)
@@ -98,9 +133,9 @@ namespace Models
                     ISBN.Equals(bookObj.ISBN) &&
                     Author.Equals(bookObj.Author) &&
                     Publisher.Equals(bookObj.Publisher) &&
-                    pagesCount.Equals(bookObj.pagesCount) &&
+                    Pages.Equals(bookObj.Pages) &&
                     Tags.Equals(bookObj.Tags) &&
-                    publishDate.Equals(bookObj.publishDate)
+                    PublishDate.Equals(bookObj.PublishDate)
                 );
         }
 
@@ -156,13 +191,15 @@ namespace Models
 
     public class Publisher
     {
-        public String name { get; set; }
-        public String city { get; set; }
-        public List<Book> books { get; set; }
+        public String Name { get; set; }
+        public String City { get; set; }
+        public List<Book> Books { get; set; }
+
+        public Publisher() { }
 
         public Publisher(String name, String city, params Book[] books)
         {
-            this.name = name;
+            this.Name = name;
             this.city = city;
             if (books != null)
                 this.books = new List<Book>(books);

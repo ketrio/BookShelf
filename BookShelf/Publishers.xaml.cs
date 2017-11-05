@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using Models;
+
 namespace BookShelf
 {
     /// <summary>
@@ -19,9 +21,24 @@ namespace BookShelf
     /// </summary>
     public partial class Publishers : Window
     {
-        public Publishers()
+        public Publisher impact { get; }
+
+        private Publishers()
         {
             InitializeComponent();
+        }
+
+        public Publishers(out Publisher publisher) : this()
+        {
+            publisher = new Publisher();
+            impact = publisher;
+            DataContext = impact;
+        }
+
+        public Publishers(Publisher publisher) : this()
+        {
+            impact = publisher;
+            DataContext = impact;
         }
     }
 }

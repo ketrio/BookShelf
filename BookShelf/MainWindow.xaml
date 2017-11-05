@@ -87,8 +87,8 @@
                         <Label Grid.Column="1" Grid.Row="0" FontSize="15" Content="{Binding ISBN}"></Label>
                         <Label Grid.Column="1" Grid.Row="1" FontSize="15" Content="{Binding Author.name}"></Label>
                         <Label Grid.Column="1" Grid.Row="2" FontSize="15" Content="{Binding Publisher}"></Label>
-                        <Label Grid.Column="1" Grid.Row="3" FontSize="15" Content="{Binding publishDate}"></Label>
-                        <Label Grid.Column="1" Grid.Row="4" FontSize="15" Content="{Binding pagesCount}"></Label>
+                        <Label Grid.Column="1" Grid.Row="3" FontSize="15" Content="{Binding PublishDate}"></Label>
+                        <Label Grid.Column="1" Grid.Row="4" FontSize="15" Content="{Binding Pages}"></Label>
                         <Label Grid.Column="1" Grid.Row="5" Name="would"  Content="{Binding Tags, Converter={StaticResource ArrayToStringConverter}}" FontSize="15"></Label>
                     </Grid>
                 </StackPanel>

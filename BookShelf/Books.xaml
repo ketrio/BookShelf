@@ -52,9 +52,9 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
         <TextBlock>Date</TextBlock>
-        <DatePicker SelectedDate="{Binding publishDate, UpdateSourceTrigger=Explicit}" Name="DateField" FontSize="20"/>
+        <DatePicker SelectedDate="{Binding PublishDate, UpdateSourceTrigger=Explicit}" Name="DateField" FontSize="20"/>
         <TextBlock>Pages</TextBlock>
-        <TextBox Text="{Binding pagesCount}" Name="PagesField" MaxLength="5" PreviewTextInput="TextBlock_PreviewTextInput" />
+        <TextBox Text="{Binding Pages}" Name="PagesField" MaxLength="5" PreviewTextInput="TextBlock_PreviewTextInput" />
         <TextBlock>Tags</TextBlock>
         <TextBox Name="TagsField" Text="{Binding Tags, Converter={StaticResource ArrayToStringConverter}, UpdateSourceTrigger=Explicit}"/>
         <Button Click="Button_Click" Width="90" Height="40" FontSize="20">Save</Button>

@@ -17,7 +17,7 @@
         </StackPanel.Resources>
         
         <TextBlock Grid.Row="0" Grid.Column="0" FontSize="30">Name</TextBlock>
-        <TextBox Grid.Row="0" Grid.Column="1" FontSize="30"></TextBox>
+        <TextBox Grid.Row="0" Grid.Column="1" FontSize="30" Text="{Binding Name}"/>
         <TextBlock Grid.Row="1" Grid.Column="0" FontSize="30">City</TextBlock>
         <TextBox Grid.Row="1" Grid.Column="1" FontSize="30"/>
         <Button Width="90" Height="40" FontSize="20">Save</Button>
