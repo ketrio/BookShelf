@@ -80,5 +80,23 @@ namespace BookShelf
             Save();
             Close();
         }
+
+        private void AuthorImage_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    BitmapImage image = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Absolute));
+                    impact.Image = image;
+                } 
+                catch (NotSupportedException)
+                {
+                    MessageBox.Show("Provided file is not supported", "Error",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
     }
 }
