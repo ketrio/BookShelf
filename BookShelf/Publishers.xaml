@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BookShelf"
         mc:Ignorable="d"
         Title="Publishers" Height="300" Width="500">
-    <StackPanel Margin="10">
+    <StackPanel Margin="10" Name="root">
         <StackPanel.Resources>
             <Style TargetType="{x:Type TextBox}">
                 <Setter Property="Margin" Value="0 0 0 10"/>
@@ -17,9 +17,9 @@
         </StackPanel.Resources>
         
         <TextBlock Grid.Row="0" Grid.Column="0" FontSize="30">Name</TextBlock>
-        <TextBox Grid.Row="0" Grid.Column="1" FontSize="30" Text="{Binding Name}"/>
+        <TextBox Grid.Row="0" Grid.Column="1" FontSize="30" Text="{Binding Name, UpdateSourceTrigger=Explicit}" Name="NameField"/>
         <TextBlock Grid.Row="1" Grid.Column="0" FontSize="30">City</TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="1" FontSize="30"/>
-        <Button Width="90" Height="40" FontSize="20">Save</Button>
+        <TextBox Grid.Row="1" Grid.Column="1" FontSize="30" Text="{Binding City, UpdateSourceTrigger=Explicit}" Name="CityField"/>
+        <Button Width="90" Height="40" FontSize="20" Click="Button_Click">Save</Button>
     </StackPanel>
 </Window>

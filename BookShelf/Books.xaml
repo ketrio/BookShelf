@@ -32,9 +32,9 @@
             </Style>
         </StackPanel.Resources>
         <TextBlock>Title</TextBlock>
-        <TextBox Text="{Binding Title, UpdateSourceTrigger=Explicit}" Name="TitleField"/>
+        <TextBox Text="{Binding Title, UpdateSourceTrigger=Explicit}" Name="TitleField" MaxLength="60"/>
         <TextBlock>ISBN</TextBlock>
-        <TextBox Text="{Binding ISBN}" Name="ISBNField"/>
+        <TextBox MaxLength="13" Text="{Binding ISBN}" Name="ISBNField" PreviewTextInput="TextBlock_PreviewTextInput"/>
         <TextBlock>Author</TextBlock>
         <ComboBox Name="AuthorField"  SelectedIndex="0" SelectedItem="{Binding Author, UpdateSourceTrigger=Explicit}" FontWeight="Normal">
             <ComboBox.ItemTemplate>
@@ -54,7 +54,7 @@
         <TextBlock>Date</TextBlock>
         <DatePicker SelectedDate="{Binding PublishDate, UpdateSourceTrigger=Explicit}" Name="DateField" FontSize="20"/>
         <TextBlock>Pages</TextBlock>
-        <TextBox Text="{Binding Pages}" Name="PagesField" MaxLength="5" PreviewTextInput="TextBlock_PreviewTextInput" />
+        <TextBox Text="{Binding Pages, UpdateSourceTrigger=Explicit}" Name="PagesField" MaxLength="5" PreviewTextInput="TextBlock_PreviewTextInput" />
         <TextBlock>Tags</TextBlock>
         <TextBox Name="TagsField" Text="{Binding Tags, Converter={StaticResource ArrayToStringConverter}, UpdateSourceTrigger=Explicit}"/>
         <Button Click="Button_Click" Width="90" Height="40" FontSize="20">Save</Button>

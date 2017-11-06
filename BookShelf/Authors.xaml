@@ -7,12 +7,12 @@
         mc:Ignorable="d"
         Title="Authors" Height="465.271" Width="500">
     <StackPanel Margin="10">        
-        <Image Name="AuthorImage" Height="150" Width="150" Cursor="Hand"/>
+        <Image Name="AuthorImage" Height="150" Width="150" Cursor="Hand" Source="{Binding Image, UpdateSourceTrigger=Explicit}" MouseUp="AuthorImage_MouseUp"/>
         <Label Content="click to change" HorizontalAlignment="Center" Foreground="Gray"/>
         <TextBlock FontSize="30" FontWeight="Bold">Name</TextBlock>
-        <TextBox Name="NameBox" FontSize="30" Margin="0 0 0 10"/>
+        <TextBox Name="NameBox" FontSize="30" Margin="0 0 0 10" Text="{Binding Name, UpdateSourceTrigger=Explicit}"/>
         <TextBlock FontSize="30" FontWeight="Bold">Birthday</TextBlock>
-        <DatePicker Name="BirthdayDate" FontSize="30" Margin="0 0 0 10"/>
-        <Button FontSize="20" Width="90" Height="40">Save</Button>
+        <DatePicker Name="BirthDate" FontSize="30" Margin="0 0 0 10" SelectedDate="{Binding BirthDate, UpdateSourceTrigger=Explicit}"/>
+        <Button FontSize="20" Width="90" Height="40" Click="Button_Click">Save</Button>
     </StackPanel>
 </Window>

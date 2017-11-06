@@ -23,27 +23,25 @@ namespace BookShelf
     /// </summary>
     public partial class Books : Window
     {
-        public Book impact { get; }
+        enum ImpactType { Save, Edit };
+
+        Book impact { get; }
+        ImpactType impactType;
         
-        private Books()
+        Books(Book book, ImpactType impactType)
         {
             InitializeComponent();
             AuthorField.ItemsSource = (Application.Current as App).LibraryData.authors;
             PublisherField.ItemsSource = (Application.Current as App).LibraryData.publishers;
-        }
 
-        public Books(out Book book) : this()
-        {
-            book = new Book();
             impact = book;
+            this.impactType = impactType;
+
             DataContext = impact;
         }
 
-        public Books(Book book) : this()
-        {
-            impact = book;
-            DataContext = impact;
-        }
+        public Books(Book book) : this(book, ImpactType.Edit) { }
+        public Books() : this(new Book(), ImpactType.Save) { } 
 
         ValidationResult ValidateForm()
         {
@@ -70,25 +68,20 @@ namespace BookShelf
                 } 
             }
 
+            // Validating comboBoxes
+            foreach (var comboBox in root.Children.OfType<ComboBox>())
+            {
+                if (comboBox.SelectedIndex == -1)
+                {
+                    return new ValidationResult(false, "Select item in comboboxes");
+                }
+            }
+
             return new ValidationResult(true, "");
         }
 
-        private void TextBlock_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        void Save()
         {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text) && (e.Text.Length < 5);
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            ValidationResult validationResult = ValidateForm();
-
-            if (!validationResult.IsValid)
-            {
-                MessageBox.Show(validationResult.ErrorContent as string);
-                return;
-            }
-
             foreach (var textBox in root.Children.OfType<TextBox>())
             {
                 BindingExpression be = textBox.GetBindingExpression(TextBox.TextProperty);
@@ -98,6 +91,29 @@ namespace BookShelf
             AuthorField.GetBindingExpression(ComboBox.SelectedItemProperty).UpdateSource();
             PublisherField.GetBindingExpression(ComboBox.SelectedItemProperty).UpdateSource();
 
+            if (impactType == ImpactType.Save) (Application.Current as App).LibraryData.books.Add(impact);
+            Close();
+        }
+
+        private void TextBlock_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            String text = (sender as TextBox).Text + e.Text;
+            Regex regex = new Regex("^([1-9][0-9]*)$");
+            e.Handled = !regex.IsMatch(text);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ValidationResult validationResult = ValidateForm();
+
+            if (!validationResult.IsValid)
+            {
+                MessageBox.Show(validationResult.ErrorContent as String, "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            Save();
             Close();
         }
     }

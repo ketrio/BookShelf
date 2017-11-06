@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using Models;
+using Microsoft.Win32;
 
 namespace BookShelf
 {
@@ -21,16 +22,23 @@ namespace BookShelf
     /// </summary>
     public partial class Authors : Window
     {
-        public enum Impact { New, Edit };
-        Impact impact;
-        Book result;
+        public enum ImpactType { Save, Edit };
 
-        public Authors(Impact impact)
+        Author impact { get; }
+        ImpactType impactType;
+
+        private Authors(Author author, ImpactType impactType)
         {
             InitializeComponent();
-            this.impact = impact;
-            AuthorImage.Source = Author.defaultImage;
+
+            impact = author;
+            this.impactType = impactType;
+
+            DataContext = impact;
         }
+
+        public Authors() : this(new Author(), ImpactType.Save) { }
+        public Authors(Author author) : this(author, ImpactType.Edit) { }
 
         ValidationResult ValidateForm()
         {
@@ -42,12 +50,35 @@ namespace BookShelf
             {
                 return new ValidationResult(false, "Every name should start with a capital letter");
             }
-            if (BirthdayDate.SelectedDate > DateTime.Now)
+            if (BirthDate.SelectedDate > DateTime.Now)
             {
                 return new ValidationResult(false, "Only past date");
             }
 
             return new ValidationResult(true, null);
+        }
+
+        void Save()
+        {
+            AuthorImage.GetBindingExpression(Image.SourceProperty).UpdateSource();
+            NameBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            BirthDate.GetBindingExpression(DatePicker.SelectedDateProperty).UpdateSource();
+
+            if (impactType == ImpactType.Save) (Application.Current as App).LibraryData.authors.Add(impact);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ValidationResult validationResult = ValidateForm();
+            if (!validationResult.IsValid)
+            {
+                MessageBox.Show(validationResult.ErrorContent as String, "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            Save();
+            Close();
         }
     }
 }

@@ -17,9 +17,9 @@ namespace Models
             }
             set
             {
-                if (value.books != null && value.books.IndexOf(this) == -1)
+                if (value.Books != null && value.Books.IndexOf(this) == -1)
                 {
-                    value.books.Add(this);
+                    value.Books.Add(this);
                 }
                 _author = value;
 
@@ -35,9 +35,9 @@ namespace Models
             }
             set
             {
-                if (value.books != null && value.books.IndexOf(this) == -1)
+                if (value.Books != null && value.Books.IndexOf(this) == -1)
                 {
-                    value.books.Add(this);
+                    value.Books.Add(this);
                 }
                 _publisher = value;
 
@@ -109,7 +109,10 @@ namespace Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Book() { }
+        public Book()
+        {
+            PublishDate = DateTime.Now.Date;
+        }
 
         public Book(String Title, String ISBN, Author Author, Publisher Publisher, int pagesCount, String[] Tags, DateTime publishDate)
         {
@@ -146,26 +149,71 @@ namespace Models
 
         public override string ToString()
         {
-            return Title + " by " + Author.name + ".";
+            return Title + " by " + Author.Name + ".";
         }
     }
 
-    public class Author
+    public class Author : INotifyPropertyChanged
     {
-        public String name { get; set; }
-        public Image image { get; set; }
-        public DateTime birthDate { get; set; }
-        public List<Book> books { get; set; }
-        
-        static public BitmapImage defaultImage { get { return new BitmapImage(new Uri(@"C:\Users\Gudoque\source\repos\BookShelf\photo.png", UriKind.Absolute)); } }
+        public String Name {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Name"));
+            }
+        }
+        public BitmapImage Image {
+            get { return _image; }
+            set
+            {
+                _image = value;
 
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Image"));
+            }
+        }
+        public DateTime BirthDate {
+            get { return _birthDate; }
+            set
+            {
+                _birthDate = value;
+
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("BirthDate"));
+            }
+        }
+        public List<Book> Books {
+            get { return _books; }
+            set
+            {
+                _books = value;
+
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Books"));
+            }
+        }
+
+        String _name;
+        BitmapImage _image;
+        DateTime _birthDate;
+        List<Book> _books;
+        
+        static public readonly BitmapImage defaultImage = 
+            new BitmapImage(new Uri(@"C:\Users\Gudoque\source\repos\BookShelf\photo.png", UriKind.Absolute));
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public Author()
+        {
+            Image = defaultImage;
+            BirthDate = DateTime.Now.Date;
+        }
         public Author(String name, DateTime birthDate, String path = null, params Book[] books)
         {
-            this.name = name;
-            this.image = File.Exists(path) ? new Bitmap(path) : null;
-            this.birthDate = birthDate;
+            this.Name = name;
+            if (path == null || !File.Exists(path)) Image = defaultImage;
+            else Image = new BitmapImage(new Uri(path, UriKind.Absolute));
+            this.BirthDate = birthDate;
             if (books != null)
-                this.books = new List<Book>(books);
+                this.Books = new List<Book>(books);
         }
 
         public override bool Equals(object obj)
@@ -175,9 +223,9 @@ namespace Models
                 return false;
             else
                 return (
-                    name.Equals(AuthorObj.name) &&
-                    birthDate.Equals(AuthorObj.birthDate) &&
-                    books.Equals(AuthorObj.books)
+                    Name.Equals(AuthorObj.Name) &&
+                    BirthDate.Equals(AuthorObj.BirthDate) &&
+                    Books.Equals(AuthorObj.Books)
                 );
         }
 
@@ -186,23 +234,50 @@ namespace Models
             return base.GetHashCode();
         }
 
-        public override string ToString() => name;
+        public override string ToString() => Name;
     }
 
-    public class Publisher
+    public class Publisher : INotifyPropertyChanged
     {
-        public String Name { get; set; }
-        public String City { get; set; }
-        public List<Book> Books { get; set; }
+        public String Name {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Name"));
+            }
+        }
+        public String City {
+            get { return _city; }
+            set
+            {
+                _city = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("City"));
+            }
+        }
+        public List<Book> Books {
+            get { return _books; }
+            set
+            {
+                _books = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Books"));       
+            }
+        }
+
+        String _name;
+        String _city;
+        List<Book> _books;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public Publisher() { }
 
         public Publisher(String name, String city, params Book[] books)
         {
             this.Name = name;
-            this.city = city;
+            this.City = city;
             if (books != null)
-                this.books = new List<Book>(books);
+                this.Books = new List<Book>(books);
         }
 
         public override bool Equals(object obj)
@@ -212,9 +287,9 @@ namespace Models
                 return false;
             else
                 return (
-                    name.Equals(PublisherObj.name) &&
-                    city.Equals(PublisherObj.city) &&
-                    books.Equals(PublisherObj.books)
+                    Name.Equals(PublisherObj.Name) &&
+                    City.Equals(PublisherObj.City) &&
+                    Books.Equals(PublisherObj.Books)
                 );
         }
 
@@ -223,6 +298,6 @@ namespace Models
             return base.GetHashCode();
         }
 
-        public override string ToString() => name + " from " + city;
+        public override string ToString() => Name + " from " + City;
     }
 }

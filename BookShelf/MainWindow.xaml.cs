@@ -44,26 +44,23 @@ namespace BookShelf
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Book book;
-            Window window = new Books(out book);
+            Window window = new Books();
             window.Owner = this;
             window.ShowDialog();
-            (Application.Current as App).LibraryData.books.Add(book);
         }
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
             Window window = new Publishers();
-            window.Show();
+            window.Owner = this;
+            window.ShowDialog();
         }
 
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
-            Authors window = new Authors(Authors.Impact.New);
+            Authors window = new Authors();
             window.Owner = this;
             window.ShowDialog();
-            
-
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookShelf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="728"
-        MinWidth="730" MinHeight="460"
+        Title="MainWindow" Height="460" Width="750"
+        MinWidth="750" MinHeight="460"
         Name="BooksView">
     <Window.Resources>
         <local:ArrayToStringConverter x:Key="ArrayToStringConverter"/>
@@ -43,7 +43,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <DataGrid Name="BookGrid" IsReadOnly="True" Grid.Column="0" DockPanel.Dock="Left" ItemsSource="{ Binding books}" AutoGenerateColumns="False" SelectedIndex="0">
+            <DataGrid Name="BookGrid" MaxWidth="250" IsReadOnly="True" Grid.Column="0" DockPanel.Dock="Left" ItemsSource="{ Binding books}" AutoGenerateColumns="False" SelectedIndex="0">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Title}" />
                     <DataGridTextColumn Header="Author" Binding="{Binding Author}" />
@@ -85,7 +85,7 @@
                         <Label Grid.Column="0" Grid.Row="5" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">Tags:</Label>
 
                         <Label Grid.Column="1" Grid.Row="0" FontSize="15" Content="{Binding ISBN}"></Label>
-                        <Label Grid.Column="1" Grid.Row="1" FontSize="15" Content="{Binding Author.name}"></Label>
+                        <Label Grid.Column="1" Grid.Row="1" FontSize="15" Content="{Binding Author}"></Label>
                         <Label Grid.Column="1" Grid.Row="2" FontSize="15" Content="{Binding Publisher}"></Label>
                         <Label Grid.Column="1" Grid.Row="3" FontSize="15" Content="{Binding PublishDate}"></Label>
                         <Label Grid.Column="1" Grid.Row="4" FontSize="15" Content="{Binding Pages}"></Label>
