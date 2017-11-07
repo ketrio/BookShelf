@@ -64,7 +64,9 @@ namespace BookShelf
             NameBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             BirthDate.GetBindingExpression(DatePicker.SelectedDateProperty).UpdateSource();
 
-            if (impactType == ImpactType.Save) (Application.Current as App).LibraryData.authors.Add(impact);
+            var authorsCollection = (Application.Current as App).LibraryData.authors;
+            if (impactType == ImpactType.Save && !authorsCollection.Contains(impact))
+                authorsCollection.Add(impact);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

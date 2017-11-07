@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Media.Imaging;
 
 namespace Models
@@ -17,11 +18,14 @@ namespace Models
             }
             set
             {
+                Author prev = Author;
+                _author = value;
+
                 if (value.Books != null && value.Books.IndexOf(this) == -1)
                 {
                     value.Books.Add(this);
+                    prev?.Books.Remove(this);
                 }
-                _author = value;
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Author"));
             }
@@ -35,11 +39,14 @@ namespace Models
             }
             set
             {
+                Publisher prev = Publisher;
+                _publisher = value;
+
                 if (value.Books != null && value.Books.IndexOf(this) == -1)
                 {
                     value.Books.Add(this);
+                    prev?.Books.Remove(this);
                 }
-                _publisher = value;
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Publisher"));
             }
@@ -128,9 +135,19 @@ namespace Models
         public override bool Equals(Object obj)
         {
             Book bookObj = obj as Book;
+
             if (bookObj == null)
                 return false;
             else
+            {
+                bool t = Title.Equals(bookObj.Title);
+                bool i = ISBN.Equals(bookObj.ISBN);
+                bool a = Author.Equals(bookObj.Author);
+                bool p = Publisher.Equals(bookObj.Publisher); //
+                bool pa = Pages.Equals(bookObj.Pages);
+                bool ta = Tags.SequenceEqual(bookObj.Tags); //
+                bool pu = PublishDate.Equals(bookObj.PublishDate);
+
                 return (
                     Title.Equals(bookObj.Title) &&
                     ISBN.Equals(bookObj.ISBN) &&
@@ -140,6 +157,7 @@ namespace Models
                     Tags.Equals(bookObj.Tags) &&
                     PublishDate.Equals(bookObj.PublishDate)
                 );
+            }
         }
 
         public override int GetHashCode()
@@ -147,10 +165,7 @@ namespace Models
             return base.GetHashCode();
         }
 
-        public override string ToString()
-        {
-            return Title + " by " + Author.Name + ".";
-        }
+        public override string ToString() => Title;
     }
 
     public class Author : INotifyPropertyChanged
@@ -197,7 +212,7 @@ namespace Models
         List<Book> _books;
         
         static public readonly BitmapImage defaultImage = 
-            new BitmapImage(new Uri(@"C:\Users\Gudoque\source\repos\BookShelf\photo.png", UriKind.Absolute));
+            new BitmapImage(new Uri(@"images/photo.png", UriKind.Relative));
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -205,6 +220,7 @@ namespace Models
         {
             Image = defaultImage;
             BirthDate = DateTime.Now.Date;
+            _books = new List<Book>();
         }
         public Author(String name, DateTime birthDate, String path = null, params Book[] books)
         {
@@ -283,14 +299,23 @@ namespace Models
         public override bool Equals(object obj)
         {
             Publisher PublisherObj = obj as Publisher;
+
+
             if (PublisherObj == null)
                 return false;
             else
+            {
+
+                bool n = Name.Equals(PublisherObj.Name);
+                bool c = City.Equals(PublisherObj.City);
+                bool b = Books.Equals(PublisherObj.Books);
+
                 return (
                     Name.Equals(PublisherObj.Name) &&
                     City.Equals(PublisherObj.City) &&
                     Books.Equals(PublisherObj.Books)
                 );
+            }
         }
 
         public override int GetHashCode()

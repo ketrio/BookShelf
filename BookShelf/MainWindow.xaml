@@ -6,12 +6,11 @@
         xmlns:local="clr-namespace:BookShelf"
         mc:Ignorable="d"
         Title="MainWindow" Height="460" Width="750"
-        MinWidth="750" MinHeight="460"
-        Name="BooksView">
+        MinWidth="750" MinHeight="460">
     <Window.Resources>
         <local:ArrayToStringConverter x:Key="ArrayToStringConverter"/>
     </Window.Resources>
-    <DockPanel LastChildFill="False">
+    <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Header="Load" />
@@ -23,12 +22,6 @@
                 <MenuItem Header="Author" Click="MenuItem_Click_2"/>
                 <MenuItem Header="Publisher" Click="MenuItem_Click_1"/>
             </MenuItem>
-            <MenuItem Header="Sort by">
-                <MenuItem Header="Title"></MenuItem>
-                <MenuItem Header="Author"></MenuItem>
-                <MenuItem Header="Pages count"></MenuItem>
-                <MenuItem Header="Date"></MenuItem>
-            </MenuItem>
         </Menu>
 
         <StatusBar DockPanel.Dock="Bottom" VerticalAlignment="Bottom"  Height="20">
@@ -37,62 +30,163 @@
             <StatusBarItem Content="{Binding publisherCount}" ContentStringFormat="{}{0} publishers"/>
         </StatusBar>
 
-        <Grid Width="{Binding Width, ElementName=BooksView}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+        <TabControl TabStripPlacement="Left">
+            <TabItem Header="Books">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
 
-            <DataGrid Name="BookGrid" MaxWidth="250" IsReadOnly="True" Grid.Column="0" DockPanel.Dock="Left" ItemsSource="{ Binding books}" AutoGenerateColumns="False" SelectedIndex="0">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Title}" />
-                    <DataGridTextColumn Header="Author" Binding="{Binding Author}" />
-                </DataGrid.Columns>
-            </DataGrid>
+                    <DataGrid Name="BookGrid" MaxWidth="250" IsReadOnly="True" Grid.Column="0" RowHeaderWidth="0" SelectedCellsChanged="BookGrid_SelectedCellsChanged"
+                          DockPanel.Dock="Left" ItemsSource="{ Binding books}" AutoGenerateColumns="False" SelectedIndex="0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Title}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
 
-            <DockPanel Grid.Column="1">
-                <ToolBarTray DockPanel.Dock="Top" Height="30">
-                    <ToolBar Width="{Binding ActualWidth,
-                             RelativeSource={RelativeSource FindAncestor,
-                                           AncestorType={x:Type ToolBarTray}}}">
-                        <Button Click="Button_Click_1">Edit</Button>
-                        <Button>Copy</Button>
-                        <Button Click="Button_Click">Delete</Button>
-                    </ToolBar>
-                </ToolBarTray>
+                    <DockPanel Grid.Column="1">
+                        <ToolBarTray DockPanel.Dock="Top" Height="30">
+                            <ToolBar Width="{Binding ActualWidth,
+                                 RelativeSource={RelativeSource FindAncestor,
+                                               AncestorType={x:Type ToolBarTray}}}">
+                                <Button Click="Button_Click_1">Edit</Button>
+                                <Button Click="Button_Click">Delete</Button>
+                            </ToolBar>
+                        </ToolBarTray>
 
-                <StackPanel Margin="10" DataContext="{Binding SelectedItem, ElementName=BookGrid, UpdateSourceTrigger=PropertyChanged}">
-                    <Label HorizontalAlignment="Center" FontSize="22" Content="{Binding Title}"></Label>
-                    <Grid Name="BookInfo">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="3*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
+                        <StackPanel Name="BookView" Margin="10" DataContext="{Binding SelectedItem, ElementName=BookGrid, UpdateSourceTrigger=PropertyChanged}">
+                            <Label HorizontalAlignment="Center" FontSize="22" Content="{Binding Title}"></Label>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
 
-                        <Label Grid.Column="0" Grid.Row="0" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">ISBN:</Label>
-                        <Label Grid.Column="0" Grid.Row="1" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">AUTHOR:</Label>
-                        <Label Grid.Column="0" Grid.Row="2" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">PUBLISHER:</Label>
-                        <Label Grid.Column="0" Grid.Row="3" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">PUBLISHED:</Label>
-                        <Label Grid.Column="0" Grid.Row="4" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">PAGES:</Label>
-                        <Label Grid.Column="0" Grid.Row="5" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">Tags:</Label>
+                                <Label Grid.Column="0" Grid.Row="0" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">ISBN:</Label>
+                                <Label Grid.Column="0" Grid.Row="1" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">AUTHOR:</Label>
+                                <Label Grid.Column="0" Grid.Row="2" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">PUBLISHER:</Label>
+                                <Label Grid.Column="0" Grid.Row="3" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">PUBLISHED:</Label>
+                                <Label Grid.Column="0" Grid.Row="4" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">PAGES:</Label>
+                                <Label Grid.Column="0" Grid.Row="5" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">Tags:</Label>
 
-                        <Label Grid.Column="1" Grid.Row="0" FontSize="15" Content="{Binding ISBN}"></Label>
-                        <Label Grid.Column="1" Grid.Row="1" FontSize="15" Content="{Binding Author}"></Label>
-                        <Label Grid.Column="1" Grid.Row="2" FontSize="15" Content="{Binding Publisher}"></Label>
-                        <Label Grid.Column="1" Grid.Row="3" FontSize="15" Content="{Binding PublishDate}"></Label>
-                        <Label Grid.Column="1" Grid.Row="4" FontSize="15" Content="{Binding Pages}"></Label>
-                        <Label Grid.Column="1" Grid.Row="5" Name="would"  Content="{Binding Tags, Converter={StaticResource ArrayToStringConverter}}" FontSize="15"></Label>
-                    </Grid>
-                </StackPanel>
-            </DockPanel>
-        </Grid>
+                                <Label Grid.Column="1" Grid.Row="0" FontSize="15" Content="{Binding ISBN}"></Label>
+                                <Label Grid.Column="1" Grid.Row="1" FontSize="15" Content="{Binding Author}"></Label>
+                                <Label Grid.Column="1" Grid.Row="2" FontSize="15" Content="{Binding Publisher}"></Label>
+                                <Label Grid.Column="1" Grid.Row="3" FontSize="15" Content="{Binding PublishDate}"></Label>
+                                <Label Grid.Column="1" Grid.Row="4" FontSize="15" Content="{Binding Pages}"></Label>
+                                <Label Grid.Column="1" Grid.Row="5" FontSize="15" Content="{Binding Tags, Converter={StaticResource ArrayToStringConverter}}"></Label>
+                            </Grid>
+                        </StackPanel>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Publishers">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid Name="PublisherGrid" MaxWidth="250" IsReadOnly="True" Grid.Column="0" RowHeaderWidth="0" SelectedCellsChanged="PublisherGrid_SelectedCellsChanged"
+                          DockPanel.Dock="Left" ItemsSource="{ Binding publishers}" AutoGenerateColumns="False" SelectedIndex="0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <DockPanel Grid.Column="1">
+                        <ToolBarTray DockPanel.Dock="Top" Height="30">
+                            <ToolBar Width="{Binding ActualWidth,
+                                 RelativeSource={RelativeSource FindAncestor,
+                                               AncestorType={x:Type ToolBarTray}}}">
+                                <Button Click="Button_Click_2">Edit</Button>
+                                <Button>Copy</Button>
+                                <Button Click="Button_Click_3">Delete</Button>
+                            </ToolBar>
+                        </ToolBarTray>
+
+                        <StackPanel Name="PublisherView" Margin="10" DataContext="{Binding SelectedItem, ElementName=PublisherGrid, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0" Grid.Row="0" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">NAME:</Label>
+                                <Label Grid.Column="0" Grid.Row="1" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">CITY:</Label>
+                                <Label Grid.Column="0" Grid.Row="2" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">BOOKS:</Label>
+
+                                <Label Grid.Column="1" Grid.Row="0" FontSize="15" Content="{Binding Name}"></Label>
+                                <Label Grid.Column="1" Grid.Row="1" FontSize="15" Content="{Binding City}"></Label>
+                                <ListBox Margin="0 2 0 0" BorderThickness="0" FontSize="15" Grid.Column="1" Grid.Row="4" ItemsSource="{Binding Books}"/>
+                            </Grid>
+                        </StackPanel>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Authors">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid Name="AuthorGrid" MaxWidth="250" IsReadOnly="True" Grid.Column="0" RowHeaderWidth="0" SelectedCellsChanged="AuthorGrid_SelectedCellsChanged"
+                          DockPanel.Dock="Left" ItemsSource="{ Binding authors}" AutoGenerateColumns="False" SelectedIndex="0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <DockPanel Grid.Column="1">
+                        <ToolBarTray DockPanel.Dock="Top" Height="30">
+                            <ToolBar Width="{Binding ActualWidth,
+                                 RelativeSource={RelativeSource FindAncestor,
+                                               AncestorType={x:Type ToolBarTray}}}">
+                                <Button Click="Button_Click_4">Edit</Button>
+                                <Button>Copy</Button>
+                                <Button Click="Button_Click_5">Delete</Button>
+                            </ToolBar>
+                        </ToolBarTray>
+
+                        <StackPanel Name="AuthorView" Margin="10" 
+                                    DataContext="{Binding SelectedItem, ElementName=AuthorGrid, UpdateSourceTrigger=PropertyChanged}">
+                            <Image Width="150" Height="150" HorizontalAlignment="Center" Source="{Binding Image}"/>
+                            <Label FontSize="22" HorizontalAlignment="Center" Content="{Binding Name}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0" Grid.Row="0" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">BIRTHDAY:</Label>
+                                <Label Grid.Column="0" Grid.Row="1" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">BOOKS:</Label>
+
+                                <Label Grid.Column="1" Grid.Row="0" FontSize="15" Content="{Binding BirthDate}"/>
+                                <ListBox Margin="0 2 0 0" BorderThickness="0" FontSize="15" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Books, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                        </StackPanel>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </DockPanel>
 </Window>

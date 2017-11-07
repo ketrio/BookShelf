@@ -91,7 +91,14 @@ namespace BookShelf
             AuthorField.GetBindingExpression(ComboBox.SelectedItemProperty).UpdateSource();
             PublisherField.GetBindingExpression(ComboBox.SelectedItemProperty).UpdateSource();
 
-            if (impactType == ImpactType.Save) (Application.Current as App).LibraryData.books.Add(impact);
+            var booksCollection = (Application.Current as App).LibraryData.books;
+            if (impactType == ImpactType.Save)
+            {
+                if (!booksCollection.Contains<Book>(impact))
+                    (Application.Current as App).LibraryData.books.Add(impact);
+                else
+                    MessageBox.Show("FUCK YOU VOVA FUCK YOURSELF!!!", "Послание дебилу", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+            }
             Close();
         }
 
