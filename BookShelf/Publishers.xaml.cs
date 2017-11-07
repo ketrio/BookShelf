@@ -60,7 +60,19 @@ namespace BookShelf
             NameField.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             CityField.GetBindingExpression(TextBox.TextProperty).UpdateSource();
 
-            if (impactType == ImpactType.Save) (Application.Current as App).LibraryData.publishers.Add(impact);
+            var publisherCollection = (Application.Current as App).LibraryData.publishers;
+            if (impactType == ImpactType.Save)
+            {
+                if (!publisherCollection.Contains<Publisher>(impact))
+                {
+                    (Application.Current as App).LibraryData.publishers.Add(impact);
+                }
+                else
+                {
+                    MessageBox.Show("The publisher is already added", "Error",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -75,6 +87,11 @@ namespace BookShelf
 
             Save();
             Close();
+        }
+
+        private void root_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) Button_Click(null, null);
         }
     }
 }

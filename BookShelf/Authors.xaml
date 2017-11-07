@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BookShelf"
         mc:Ignorable="d"
         Title="Authors" Height="465.271" Width="500">
-    <StackPanel Margin="10">        
+    <StackPanel Margin="10" KeyUp="root_KeyUp">        
         <Image Name="AuthorImage" Height="150" Width="150" Cursor="Hand" Source="{Binding Image, UpdateSourceTrigger=Explicit}" MouseUp="AuthorImage_MouseUp"/>
         <Label Content="click to change" HorizontalAlignment="Center" Foreground="Gray"/>
         <TextBlock FontSize="30" FontWeight="Bold">Name</TextBlock>

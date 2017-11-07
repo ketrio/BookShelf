@@ -65,8 +65,18 @@ namespace BookShelf
             BirthDate.GetBindingExpression(DatePicker.SelectedDateProperty).UpdateSource();
 
             var authorsCollection = (Application.Current as App).LibraryData.authors;
-            if (impactType == ImpactType.Save && !authorsCollection.Contains(impact))
-                authorsCollection.Add(impact);
+            if (impactType == ImpactType.Save)
+            {
+                if (!authorsCollection.Contains(impact))
+                {
+                    authorsCollection.Add(impact);
+                }
+                else
+                {
+                    MessageBox.Show("The collection already contains the author", "Error",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -99,6 +109,11 @@ namespace BookShelf
                         MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+        private void root_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) Button_Click(null, null);
         }
     }
 }

@@ -97,7 +97,8 @@ namespace BookShelf
                 if (!booksCollection.Contains<Book>(impact))
                     (Application.Current as App).LibraryData.books.Add(impact);
                 else
-                    MessageBox.Show("FUCK YOU VOVA FUCK YOURSELF!!!", "Послание дебилу", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+                    MessageBox.Show("A book with the ISBN has already been added", "Error",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
             }
             Close();
         }
@@ -122,6 +123,11 @@ namespace BookShelf
 
             Save();
             Close();
+        }
+
+        private void root_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) Button_Click(null, null);
         }
     }
 

@@ -115,6 +115,7 @@
                         </ToolBarTray>
 
                         <StackPanel Name="PublisherView" Margin="10" DataContext="{Binding SelectedItem, ElementName=PublisherGrid, UpdateSourceTrigger=PropertyChanged}">
+                            <Label HorizontalAlignment="Center" Content="{Binding Name}" FontSize="22"/>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
@@ -123,16 +124,13 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>
-                                    <RowDefinition/>
                                 </Grid.RowDefinitions>
 
-                                <Label Grid.Column="0" Grid.Row="0" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">NAME:</Label>
-                                <Label Grid.Column="0" Grid.Row="1" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">CITY:</Label>
-                                <Label Grid.Column="0" Grid.Row="2" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">BOOKS:</Label>
+                                <Label Grid.Column="0" Grid.Row="0" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">CITY:</Label>
+                                <Label Grid.Column="0" Grid.Row="1" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">BOOKS:</Label>
 
-                                <Label Grid.Column="1" Grid.Row="0" FontSize="15" Content="{Binding Name}"></Label>
-                                <Label Grid.Column="1" Grid.Row="1" FontSize="15" Content="{Binding City}"></Label>
-                                <ListBox Margin="0 2 0 0" BorderThickness="0" FontSize="15" Grid.Column="1" Grid.Row="4" ItemsSource="{Binding Books}"/>
+                                <Label Grid.Column="1" Grid.Row="0" FontSize="15" Content="{Binding City}"></Label>
+                                <ListBox Margin="0 2 0 0" BorderThickness="0" FontSize="15" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Books}"/>
                             </Grid>
                         </StackPanel>
                     </DockPanel>

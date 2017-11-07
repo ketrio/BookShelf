@@ -121,7 +121,8 @@ namespace Models
             PublishDate = DateTime.Now.Date;
         }
 
-        public Book(String Title, String ISBN, Author Author, Publisher Publisher, int pagesCount, String[] Tags, DateTime publishDate)
+        public Book(String Title, String ISBN, Author Author, 
+            Publisher Publisher, int pagesCount, String[] Tags, DateTime publishDate)
         {
             this.Title = Title;
             this.ISBN = ISBN;
@@ -140,23 +141,7 @@ namespace Models
                 return false;
             else
             {
-                bool t = Title.Equals(bookObj.Title);
-                bool i = ISBN.Equals(bookObj.ISBN);
-                bool a = Author.Equals(bookObj.Author);
-                bool p = Publisher.Equals(bookObj.Publisher); //
-                bool pa = Pages.Equals(bookObj.Pages);
-                bool ta = Tags.SequenceEqual(bookObj.Tags); //
-                bool pu = PublishDate.Equals(bookObj.PublishDate);
-
-                return (
-                    Title.Equals(bookObj.Title) &&
-                    ISBN.Equals(bookObj.ISBN) &&
-                    Author.Equals(bookObj.Author) &&
-                    Publisher.Equals(bookObj.Publisher) &&
-                    Pages.Equals(bookObj.Pages) &&
-                    Tags.Equals(bookObj.Tags) &&
-                    PublishDate.Equals(bookObj.PublishDate)
-                );
+                return ISBN.Equals(bookObj.ISBN);
             }
         }
 
@@ -240,8 +225,7 @@ namespace Models
             else
                 return (
                     Name.Equals(AuthorObj.Name) &&
-                    BirthDate.Equals(AuthorObj.BirthDate) &&
-                    Books.Equals(AuthorObj.Books)
+                    BirthDate.Equals(AuthorObj.BirthDate)
                 );
         }
 
@@ -308,12 +292,10 @@ namespace Models
 
                 bool n = Name.Equals(PublisherObj.Name);
                 bool c = City.Equals(PublisherObj.City);
-                bool b = Books.Equals(PublisherObj.Books);
 
                 return (
                     Name.Equals(PublisherObj.Name) &&
-                    City.Equals(PublisherObj.City) &&
-                    Books.Equals(PublisherObj.Books)
+                    City.Equals(PublisherObj.City)
                 );
             }
         }

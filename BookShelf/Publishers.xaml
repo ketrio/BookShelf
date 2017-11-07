@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BookShelf"
         mc:Ignorable="d"
         Title="Publishers" Height="300" Width="500">
-    <StackPanel Margin="10" Name="root">
+    <StackPanel Margin="10" Name="root" KeyUp="root_KeyUp">
         <StackPanel.Resources>
             <Style TargetType="{x:Type TextBox}">
                 <Setter Property="Margin" Value="0 0 0 10"/>
