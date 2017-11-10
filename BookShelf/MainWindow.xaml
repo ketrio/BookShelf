@@ -7,15 +7,18 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="460" Width="750"
         MinWidth="750" MinHeight="460">
+    <Window.DataContext>
+        <!--<local:MainWindow LibraryData="{Binding LibraryData, Source={x:Static Application.Current}}"/>-->
+        <Binding Path="LibraryData" Source="{x:Static Application.Current}" UpdateSourceTrigger="PropertyChanged"/>
+    </Window.DataContext>
     <Window.Resources>
         <local:ArrayToStringConverter x:Key="ArrayToStringConverter"/>
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
-                <MenuItem Header="Load" />
-                <MenuItem Header="Save" />
-                <MenuItem Header="Exit" />
+                <MenuItem Header="Load" Click="MenuItem_Click_3"/>
+                <MenuItem Header="Save" Click="MenuItem_Click_4"/>
             </MenuItem>
             <MenuItem Header="Add">
                 <MenuItem Header="Book" Click="MenuItem_Click"/>
@@ -25,9 +28,9 @@
         </Menu>
 
         <StatusBar DockPanel.Dock="Bottom" VerticalAlignment="Bottom"  Height="20">
-            <StatusBarItem Content="{Binding bookCount}" ContentStringFormat="{}{0} books"/>
-            <StatusBarItem Content="{Binding authorCount}" ContentStringFormat="{}{0} authors"/>
-            <StatusBarItem Content="{Binding publisherCount}" ContentStringFormat="{}{0} publishers"/>
+            <StatusBarItem Content="{Binding bookCount, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="{}{0} books"/>
+            <StatusBarItem Content="{Binding authorCount, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="{}{0} authors"/>
+            <StatusBarItem Content="{Binding publisherCount, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="{}{0} publishers"/>
         </StatusBar>
 
         <TabControl TabStripPlacement="Left">
@@ -56,7 +59,7 @@
                         </ToolBarTray>
 
                         <StackPanel Name="BookView" Margin="10" DataContext="{Binding SelectedItem, ElementName=BookGrid, UpdateSourceTrigger=PropertyChanged}">
-                            <Label HorizontalAlignment="Center" FontSize="22" Content="{Binding Title}"></Label>
+                            <Label HorizontalAlignment="Center" FontSize="22" Content="{Binding Title, UpdateSourceTrigger=PropertyChanged}"></Label>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
@@ -130,7 +133,7 @@
                                 <Label Grid.Column="0" Grid.Row="1" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">BOOKS:</Label>
 
                                 <Label Grid.Column="1" Grid.Row="0" FontSize="15" Content="{Binding City}"></Label>
-                                <ListBox Margin="0 2 0 0" BorderThickness="0" FontSize="15" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Books}"/>
+                                <ListBox Margin="0 2 0 0" BorderThickness="0" FontSize="15" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Books, UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                         </StackPanel>
                     </DockPanel>
@@ -178,7 +181,7 @@
                                 <Label Grid.Column="0" Grid.Row="0" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">BIRTHDAY:</Label>
                                 <Label Grid.Column="0" Grid.Row="1" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">BOOKS:</Label>
 
-                                <Label Grid.Column="1" Grid.Row="0" FontSize="15" Content="{Binding BirthDate}"/>
+                                <Label Grid.Column="1" Grid.Row="0" FontSize="15" Content="{Binding BirthDate, UpdateSourceTrigger=PropertyChanged}"/>
                                 <ListBox Margin="0 2 0 0" BorderThickness="0" FontSize="15" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Books, UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                         </StackPanel>

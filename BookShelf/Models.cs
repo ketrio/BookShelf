@@ -4,10 +4,13 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Media.Imaging;
 
 namespace Models
 {
+    [Serializable]
     public class Book : INotifyPropertyChanged
     {
         public Author Author
@@ -113,7 +116,7 @@ namespace Models
         String[] _tags;
         Author _author;
         Publisher _publisher;
-
+        [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Book()
@@ -153,7 +156,8 @@ namespace Models
         public override string ToString() => Title;
     }
 
-    public class Author : INotifyPropertyChanged
+    [Serializable]
+    public class Author : INotifyPropertyChanged, ISerializable
     {
         public String Name {
             get { return _name; }
@@ -197,8 +201,8 @@ namespace Models
         List<Book> _books;
         
         static public readonly BitmapImage defaultImage = 
-            new BitmapImage(new Uri(@"images/photo.png", UriKind.Relative));
-
+            new BitmapImage(new Uri(@"pack://application:,,,/images/photo.png "));
+        [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Author()
@@ -235,8 +239,54 @@ namespace Models
         }
 
         public override string ToString() => Name;
+
+        public static byte[] ImageToByte(BitmapImage bitmapImage)
+        {
+            byte[] data;
+            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
+            using (MemoryStream ms = new MemoryStream())
+            {
+                encoder.Save(ms);
+                data = ms.ToArray();
+            }
+            return data;
+        }
+
+        public static BitmapImage ToImage(byte[] array)
+        {
+            using (var ms = new MemoryStream(array))
+            {
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.StreamSource = ms;
+                image.EndInit();
+                image.Freeze();
+                return image;
+            }
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.SetType(typeof(Author));
+            info.AddValue("Name", _name);
+            info.AddValue("Image", ImageToByte(_image));
+            info.AddValue("Birthdate", _birthDate);
+            info.AddValue("Books", _books);
+        }
+
+        private Author(SerializationInfo info, StreamingContext ctx)
+        {
+            _image = ToImage(info.GetValue("Image", typeof(byte[])) as byte[]);
+            _name = info.GetString("Name");
+            _birthDate = info.GetDateTime("Birthdate");
+            _books = info.GetValue("Books", typeof(List<Book>)) as List<Book>;
+        }
+
     }
 
+    [Serializable]
     public class Publisher : INotifyPropertyChanged
     {
         public String Name {
@@ -267,7 +317,7 @@ namespace Models
         String _name;
         String _city;
         List<Book> _books;
-
+        [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Publisher() { }

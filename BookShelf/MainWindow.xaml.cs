@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Models;
 using System.Collections.ObjectModel;
+using Microsoft.Win32;
 
 namespace BookShelf
 {
@@ -25,7 +26,7 @@ namespace BookShelf
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = (Application.Current as App).LibraryData;
+            //DataContext = (Application.Current as App).LibraryData;
         }
 
         // Delete Book
@@ -138,6 +139,44 @@ namespace BookShelf
         private void AuthorGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             AuthorView.Visibility = Visibility.Visible;
+        }
+
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    (Application.Current as App).LibraryData.watcher?.Dispose();
+                    (Application.Current as App).LibraryData = LibraryData.Load(openFileDialog.FileName);
+                    (Application.Current as App).LibraryData.watcher.Changed += (Application.Current as App).Watcher_Changed;
+                    (Application.Current as App).LibraryData.watcher.EnableRaisingEvents = true;
+                }
+                catch (NotSupportedException)
+                {
+                    MessageBox.Show("Corrupted data", "Serialization error",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void MenuItem_Click_4(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    (Application.Current as App).LibraryData.storagePath = saveFileDialog.FileName;
+                    (Application.Current as App).LibraryData.Save();
+                }
+                catch (NotSupportedException)
+                {
+                    MessageBox.Show("Corrupted data", "Serialization error",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
     }
 }

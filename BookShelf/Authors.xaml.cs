@@ -100,7 +100,7 @@ namespace BookShelf
             {
                 try
                 {
-                    BitmapImage image = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Absolute));
+                    BitmapImage image = new BitmapImage(new Uri(openFileDialog.FileName));
                     impact.Image = image;
                 } 
                 catch (NotSupportedException)
