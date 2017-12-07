@@ -50,10 +50,6 @@ namespace BookShelf
             {
                 BookGrid.SelectedIndex = 0;
             }
-            else
-            {
-                BookView.Visibility = Visibility.Collapsed;
-            }
         }
 
         // Add Book
