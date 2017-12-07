@@ -43,8 +43,9 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <DockPanel>
-                        <ListBox Name="BookGrid" Width="200" Height="400"
+                    <StackPanel>
+                        <TextBox Height="25" Width="200" FontSize="16" TextChanged="SearchBox_TextChanged"/>
+                        <ListBox Name="BookGrid" Width="200" Height="375"
                           DockPanel.Dock="Top" ItemsSource="{Binding Books, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
@@ -62,7 +63,7 @@
                                 <MenuItem Header="Publisher" Click="MenuItem_Click_9"/>
                             </MenuItem>
                         </Menu>
-                    </DockPanel>
+                    </StackPanel>
 
 
                     <DockPanel Grid.Column="1">
@@ -72,10 +73,7 @@
                                                AncestorType={x:Type ToolBarTray}}}">
                                 <Button Click="Button_Click_1">Edit</Button>
                                 <Button Click="Button_Click">Delete</Button>
-                                
-                            </ToolBar>
-                            <ToolBar HorizontalAlignment="Right">
-                                <TextBox Width="200" TextChanged="SearchBox_TextChanged"/>
+
                             </ToolBar>
                         </Grid>
                         
@@ -128,8 +126,9 @@
                         </DataGrid.Columns>
                     </DataGrid>-->
 
-                    <DockPanel>
-                        <ListBox Name="PublisherGrid" Width="200" Height="400" DockPanel.Dock="Top"
+                    <StackPanel>
+                        <TextBox Height="25" FontSize="16" Width="200" TextChanged="TextBox_TextChanged"/>
+                        <ListBox Name="PublisherGrid" Width="200" Height="375" DockPanel.Dock="Top"
                              ItemsSource="{ Binding Publishers}" SelectedIndex="0">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
@@ -145,7 +144,7 @@
                                 <MenuItem Header="City" Click="MenuItem_Click_11"/>
                             </MenuItem>
                         </Menu>
-                    </DockPanel>
+                    </StackPanel>
 
                     <DockPanel Grid.Column="1">
                         <Grid DockPanel.Dock="Top" Height="30">
@@ -154,9 +153,6 @@
                                                AncestorType={x:Type ToolBarTray}}}">
                                 <Button Click="Button_Click_2">Edit</Button>
                                 <Button Click="Button_Click_3">Delete</Button>
-                            </ToolBar>
-                            <ToolBar HorizontalAlignment="Right">
-                                <TextBox Width="200" TextChanged="TextBox_TextChanged"/>
                             </ToolBar>
                         </Grid>
 
@@ -197,8 +193,9 @@
                     </DataGrid>-->
 
 
-                    <DockPanel>
-                        <ListBox Name="AuthorGrid" Height="400" Grid.Column="0" DockPanel.Dock="Top"
+                    <StackPanel>
+                        <TextBox Height="25" FontSize="16" Width="200" TextChanged="TextBox_TextChanged_1"/>
+                        <ListBox Name="AuthorGrid" Height="375" Grid.Column="0" DockPanel.Dock="Top"
                                  ItemsSource="{Binding Authors}" SelectedIndex="0" Width="200">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
@@ -212,7 +209,7 @@
                                 <MenuItem Header="Birthday" Click="MenuItem_Click_13"/>
                             </MenuItem>
                         </Menu>
-                    </DockPanel>
+                    </StackPanel>
 
                     <DockPanel Grid.Column="1">
                         <Grid DockPanel.Dock="Top" Height="30">
@@ -221,9 +218,6 @@
                                                AncestorType={x:Type ToolBarTray}}}">
                                 <Button Click="Button_Click_4">Edit</Button>
                                 <Button Click="Button_Click_5">Delete</Button>
-                            </ToolBar>
-                            <ToolBar HorizontalAlignment="Right">
-                                <TextBox Width="200" TextChanged="TextBox_TextChanged_1"/>
                             </ToolBar>
                         </Grid>
 

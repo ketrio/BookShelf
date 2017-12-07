@@ -289,41 +289,59 @@ namespace BookShelf
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var textBox = sender as TextBox;
-            if (textBox.Text.Length == 0)
+            if (AppCur.LibraryData.Books.Count > 0)
             {
-                BookGrid.ItemsSource = AppCur.LibraryData.Books;
-            }
-            else
-            {
-                BookGrid.ItemsSource = AppCur.LibraryData.Books
-                    .Where(book => book.Title.ToLower().Contains(textBox.Text.ToLower()) || book.Tags.Any(tag => tag.ToLower().Contains(textBox.Text.ToLower())));
+                var textBox = sender as TextBox;
+                if (textBox.Text.Length == 0)
+                {
+                    BookGrid.ItemsSource = AppCur.LibraryData.Books;
+                    BookGrid.SelectedIndex = 0;
+
+                }
+                else
+                {
+                    BookGrid.ItemsSource = AppCur.LibraryData.Books
+                        .Where(book => book.Title.ToLower().Contains(textBox.Text.ToLower()) || book.Tags.Any(tag => tag.ToLower().Contains(textBox.Text.ToLower())));
+                    BookGrid.SelectedIndex = 0;
+                }
             }
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var textBox = sender as TextBox;
-            if (textBox.Text.Length == 0)
+            if (AppCur.LibraryData.Publishers.Count > 0)
             {
-                PublisherGrid.ItemsSource = AppCur.LibraryData.Publishers;
-            }
-            else
-            {
-                PublisherGrid.ItemsSource = AppCur.LibraryData.Publishers.Where(publ => publ.Name.ToLower().Contains(textBox.Text.ToLower()));
+                var textBox = sender as TextBox;
+                if (textBox.Text.Length == 0)
+                {
+                    PublisherGrid.ItemsSource = AppCur.LibraryData.Publishers;
+                    PublisherGrid.SelectedIndex = 0;
+
+                }
+                else
+                {
+                    PublisherGrid.ItemsSource = AppCur.LibraryData.Publishers.Where(publ => publ.Name.ToLower().Contains(textBox.Text.ToLower()));
+                    PublisherGrid.SelectedIndex = 0;
+                }
             }
         }
 
         private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
         {
-            var textBox = sender as TextBox;
-            if (textBox.Text.Length == 0)
+            if (AppCur.LibraryData.Authors.Count > 0)
             {
-                PublisherGrid.ItemsSource = AppCur.LibraryData.Publishers;
-            }
-            else
-            {
-                PublisherGrid.ItemsSource = AppCur.LibraryData.Publishers.Where(publ => publ.Name.ToLower().Contains(textBox.Text.ToLower()));
+                var textBox = sender as TextBox;
+                if (textBox.Text.Length == 0)
+                {
+                    PublisherGrid.ItemsSource = AppCur.LibraryData.Authors;
+                    PublisherGrid.SelectedIndex = 0;
+
+                }
+                else
+                {
+                    PublisherGrid.ItemsSource = AppCur.LibraryData.Authors.Where(author => author.Name.ToLower().Contains(textBox.Text.ToLower()));
+                    PublisherGrid.SelectedIndex = 0;
+                }
             }
         }
     }
