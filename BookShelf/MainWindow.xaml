@@ -8,13 +8,12 @@
         Title="MainWindow" Height="460" Width="750"
         MinWidth="750" MinHeight="460">
     <Window.DataContext>
-        <!--<local:MainWindow LibraryData="{Binding LibraryData, Source={x:Static Application.Current}}"/>-->
         <Binding Path="LibraryData" Source="{x:Static Application.Current}" UpdateSourceTrigger="PropertyChanged"/>
     </Window.DataContext>
     <Window.Resources>
         <local:ArrayToStringConverter x:Key="ArrayToStringConverter"/>
     </Window.Resources>
-    <DockPanel LastChildFill="True">
+    <DockPanel LastChildFill="True" Name="root">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Header="Load" Click="MenuItem_Click_3"/>
@@ -24,6 +23,9 @@
                 <MenuItem Header="Book" Click="MenuItem_Click"/>
                 <MenuItem Header="Author" Click="MenuItem_Click_2"/>
                 <MenuItem Header="Publisher" Click="MenuItem_Click_1"/>
+            </MenuItem>
+            <MenuItem Name="PluginMenu" Header="Plugins">
+                <MenuItem Header="Reset appearance" Click="MenuItem_Click_5"/>
             </MenuItem>
         </Menu>
 
@@ -42,7 +44,7 @@
                     </Grid.ColumnDefinitions>
 
                     <DataGrid Name="BookGrid" MaxWidth="250" IsReadOnly="True" Grid.Column="0" RowHeaderWidth="0" SelectedCellsChanged="BookGrid_SelectedCellsChanged"
-                          DockPanel.Dock="Left" ItemsSource="{ Binding books}" AutoGenerateColumns="False" SelectedIndex="0">
+                          DockPanel.Dock="Left" ItemsSource="{Binding books}" AutoGenerateColumns="False" SelectedIndex="0" CanUserSortColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name" Binding="{Binding Title}" />
                         </DataGrid.Columns>

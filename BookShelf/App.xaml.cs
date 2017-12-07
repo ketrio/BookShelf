@@ -15,6 +15,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Threading;
 using System.Windows.Media.Imaging;
+using BookShelf.PluginSystem;
 
 namespace BookShelf
 {
@@ -36,6 +37,7 @@ namespace BookShelf
 
         [NonSerialized]
         public String storagePath;
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NonSerialized]
@@ -104,7 +106,7 @@ namespace BookShelf
         {
             watcher.EnableRaisingEvents = false;
             var formatter = new BinaryFormatter();
-            using (Stream s = File.Create(storagePath))
+            using (Stream s = File.OpenWrite(storagePath))
             {
                 using (var ds = new DeflateStream(s, CompressionMode.Compress))
                 {
@@ -125,11 +127,12 @@ namespace BookShelf
             }
         }
         LibraryData _libraryData;
+        public List<Type> plugins = PluginLoader.Load(Path.GetFullPath("Plugins/"));
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            LibraryData = new LibraryData("bookshelf.dat");
+            LibraryData = new LibraryData();
             LibraryData.watcher.Changed += Watcher_Changed;
         }
 

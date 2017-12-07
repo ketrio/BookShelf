@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Models;
 using System.Collections.ObjectModel;
 using Microsoft.Win32;
+using BookShelf.PluginSystem;
 
 namespace BookShelf
 {
@@ -26,7 +27,18 @@ namespace BookShelf
         public MainWindow()
         {
             InitializeComponent();
-            //DataContext = (Application.Current as App).LibraryData;
+            
+
+            foreach (Type type in (Application.Current as App).plugins)
+            {
+                MenuItem item = new MenuItem();
+                item.Header = (type.GetCustomAttributes(typeof(PluginInfo), false)[0] as PluginInfo).Name;
+                
+                item.Click += new RoutedEventHandler((obj, e) =>
+                    ((IPlugin)Activator.CreateInstance(type, Application.Current)).Impact());
+
+                PluginMenu.Items.Add(item);
+            }
         }
 
         // Delete Book
@@ -128,17 +140,20 @@ namespace BookShelf
 
         private void BookGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            BookView.Visibility = Visibility.Visible;
+            if (BookView != null)
+                BookView.Visibility = Visibility.Visible;
         }
 
         private void PublisherGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            PublisherView.Visibility = Visibility.Visible;
+            if (PublisherView != null)
+                PublisherView.Visibility = Visibility.Visible;
         }
 
         private void AuthorGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            AuthorView.Visibility = Visibility.Visible;
+            if (AuthorView != null)
+                AuthorView.Visibility = Visibility.Visible;
         }
 
         private void MenuItem_Click_3(object sender, RoutedEventArgs e)
@@ -177,6 +192,11 @@ namespace BookShelf
                         MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+        private void MenuItem_Click_5(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Resources.Clear();
         }
     }
 }

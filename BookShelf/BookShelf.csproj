@@ -59,6 +59,8 @@
       <DependentUpon>Books.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models.cs" />
+    <Compile Include="PluginSystem\IPlugin.cs" />
+    <Compile Include="PluginSystem\PluginLoader.cs" />
     <Compile Include="Publishers.xaml.cs">
       <DependentUpon>Publishers.xaml</DependentUpon>
     </Compile>
