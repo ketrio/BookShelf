@@ -27,10 +27,6 @@
             <MenuItem Name="PluginMenu" Header="Plugins">
                 <MenuItem Header="Reset appearance" Click="MenuItem_Click_5"/>
             </MenuItem>
-            <MenuItem Header="List">
-                <MenuItem Header="Group by author"/>
-                <MenuItem Header="Sort by name"/>
-            </MenuItem>
         </Menu>
 
         <StatusBar DockPanel.Dock="Bottom" VerticalAlignment="Bottom"  Height="20">
@@ -47,24 +43,42 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <ListBox Name="BookGrid" Width="200" Grid.Column="0"
-                          DockPanel.Dock="Left" ItemsSource="{Binding books}" SelectedIndex="0">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock  Text="{Binding Title}" />
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                    <DockPanel>
+                        <ListBox Name="BookGrid" Width="200" Height="400"
+                          DockPanel.Dock="Top" ItemsSource="{Binding books}" SelectedIndex="0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock  Text="{Binding Title}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Menu DockPanel.Dock="Bottom">
+                            <MenuItem Header="Sort by">
+                                <MenuItem Header="Name"/>
+                                <MenuItem Header="Page count"/>
+                            </MenuItem>
+                            <MenuItem Header="Group by">
+                                <MenuItem Header="Author"/>
+                                <MenuItem Header="Publisher"/>
+                            </MenuItem>
+                        </Menu>
+                    </DockPanel>
+
 
                     <DockPanel Grid.Column="1">
-                        <ToolBarTray DockPanel.Dock="Top" Height="30">
+                        <Grid DockPanel.Dock="Top" Height="30">
                             <ToolBar Width="{Binding ActualWidth,
                                  RelativeSource={RelativeSource FindAncestor,
                                                AncestorType={x:Type ToolBarTray}}}">
                                 <Button Click="Button_Click_1">Edit</Button>
                                 <Button Click="Button_Click">Delete</Button>
+                                
                             </ToolBar>
-                        </ToolBarTray>
+                            <ToolBar HorizontalAlignment="Right">
+                                <TextBox Width="200" Name="SearchBox"/>
+                            </ToolBar>
+                        </Grid>
+                        
 
                         <StackPanel Name="BookView" Margin="10" DataContext="{Binding SelectedItem, ElementName=BookGrid, UpdateSourceTrigger=PropertyChanged}">
                             <Label HorizontalAlignment="Center" FontSize="22" Content="{Binding Title, UpdateSourceTrigger=PropertyChanged}"></Label>
@@ -114,14 +128,24 @@
                         </DataGrid.Columns>
                     </DataGrid>-->
 
-                    <ListBox Name="PublisherGrid" Width="200" DockPanel.Dock="Left" 
+                    <DockPanel>
+                        <ListBox Name="PublisherGrid" Width="200" Height="400" DockPanel.Dock="Top"
                              ItemsSource="{ Binding publishers}" SelectedIndex="0">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" />
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Menu DockPanel.Dock="Bottom">
+                            <MenuItem Header="Sort by">
+                                <MenuItem Header="Name"/>
+                            </MenuItem>
+                            <MenuItem Header="Group by">
+                                <MenuItem Header="City"/>
+                            </MenuItem>
+                        </Menu>
+                    </DockPanel>
 
                     <DockPanel Grid.Column="1">
                         <ToolBarTray DockPanel.Dock="Top" Height="30">
@@ -129,7 +153,6 @@
                                  RelativeSource={RelativeSource FindAncestor,
                                                AncestorType={x:Type ToolBarTray}}}">
                                 <Button Click="Button_Click_2">Edit</Button>
-                                <Button>Copy</Button>
                                 <Button Click="Button_Click_3">Delete</Button>
                             </ToolBar>
                         </ToolBarTray>
@@ -170,14 +193,23 @@
                         </DataGrid.Columns>
                     </DataGrid>-->
 
-                    <ListBox Name="AuthorGrid" MaxWidth="250" Grid.Column="0"
-                          DockPanel.Dock="Left" ItemsSource="{Binding authors}" SelectedIndex="0" Width="200">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}"/>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+
+                    <DockPanel>
+                        <ListBox Name="AuthorGrid" Height="400" Grid.Column="0" DockPanel.Dock="Top"
+                                 ItemsSource="{Binding authors}" SelectedIndex="0" Width="200">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Menu DockPanel.Dock="Bottom">
+                            <MenuItem Header="Sort by">
+                                <MenuItem Header="Name"/>
+                                <MenuItem Header="Birthday"/>
+                            </MenuItem>
+                        </Menu>
+                    </DockPanel>
 
                     <DockPanel Grid.Column="1">
                         <ToolBarTray DockPanel.Dock="Top" Height="30">
@@ -185,7 +217,6 @@
                                  RelativeSource={RelativeSource FindAncestor,
                                                AncestorType={x:Type ToolBarTray}}}">
                                 <Button Click="Button_Click_4">Edit</Button>
-                                <Button>Copy</Button>
                                 <Button Click="Button_Click_5">Delete</Button>
                             </ToolBar>
                         </ToolBarTray>
