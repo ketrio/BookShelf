@@ -60,12 +60,12 @@ namespace BookShelf
             NameField.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             CityField.GetBindingExpression(TextBox.TextProperty).UpdateSource();
 
-            var publisherCollection = (Application.Current as App).LibraryData.publishers;
+            var publisherCollection = (Application.Current as App).LibraryData.Publishers;
             if (impactType == ImpactType.Save)
             {
                 if (!publisherCollection.Contains<Publisher>(impact))
                 {
-                    (Application.Current as App).LibraryData.publishers.Add(impact);
+                    (Application.Current as App).LibraryData.Publishers.Add(impact);
                 }
                 else
                 {

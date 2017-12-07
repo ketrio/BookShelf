@@ -64,7 +64,7 @@ namespace BookShelf
             NameBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             BirthDate.GetBindingExpression(DatePicker.SelectedDateProperty).UpdateSource();
 
-            var authorsCollection = (Application.Current as App).LibraryData.authors;
+            var authorsCollection = (Application.Current as App).LibraryData.Authors;
             if (impactType == ImpactType.Save)
             {
                 if (!authorsCollection.Contains(impact))

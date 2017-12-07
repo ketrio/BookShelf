@@ -31,8 +31,8 @@ namespace BookShelf
         Books(Book book, ImpactType impactType)
         {
             InitializeComponent();
-            AuthorField.ItemsSource = (Application.Current as App).LibraryData.authors;
-            PublisherField.ItemsSource = (Application.Current as App).LibraryData.publishers;
+            AuthorField.ItemsSource = (Application.Current as App).LibraryData.Authors;
+            PublisherField.ItemsSource = (Application.Current as App).LibraryData.Publishers;
 
             impact = book;
             this.impactType = impactType;
@@ -91,11 +91,11 @@ namespace BookShelf
             AuthorField.GetBindingExpression(ComboBox.SelectedItemProperty).UpdateSource();
             PublisherField.GetBindingExpression(ComboBox.SelectedItemProperty).UpdateSource();
 
-            var booksCollection = (Application.Current as App).LibraryData.books;
+            var booksCollection = (Application.Current as App).LibraryData.Books;
             if (impactType == ImpactType.Save)
             {
                 if (!booksCollection.Contains<Book>(impact))
-                    (Application.Current as App).LibraryData.books.Add(impact);
+                    (Application.Current as App).LibraryData.Books.Add(impact);
                 else
                     MessageBox.Show("A book with the ISBN has already been added", "Error",
                         MessageBoxButton.OK, MessageBoxImage.Error);

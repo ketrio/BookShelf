@@ -45,7 +45,7 @@
 
                     <DockPanel>
                         <ListBox Name="BookGrid" Width="200" Height="400"
-                          DockPanel.Dock="Top" ItemsSource="{Binding books}" SelectedIndex="0">
+                          DockPanel.Dock="Top" ItemsSource="{Binding Books, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock  Text="{Binding Title}" />
@@ -54,12 +54,12 @@
                         </ListBox>
                         <Menu DockPanel.Dock="Bottom">
                             <MenuItem Header="Sort by">
-                                <MenuItem Header="Name"/>
-                                <MenuItem Header="Page count"/>
+                                <MenuItem Header="Name" Click="MenuItem_Click_6"/>
+                                <MenuItem Header="Page count" Click="MenuItem_Click_7"/>
                             </MenuItem>
                             <MenuItem Header="Group by">
-                                <MenuItem Header="Author"/>
-                                <MenuItem Header="Publisher"/>
+                                <MenuItem Header="Author" Click="MenuItem_Click_8"/>
+                                <MenuItem Header="Publisher" Click="MenuItem_Click_9"/>
                             </MenuItem>
                         </Menu>
                     </DockPanel>
@@ -75,7 +75,7 @@
                                 
                             </ToolBar>
                             <ToolBar HorizontalAlignment="Right">
-                                <TextBox Width="200" Name="SearchBox"/>
+                                <TextBox Width="200" TextChanged="SearchBox_TextChanged"/>
                             </ToolBar>
                         </Grid>
                         
@@ -130,7 +130,7 @@
 
                     <DockPanel>
                         <ListBox Name="PublisherGrid" Width="200" Height="400" DockPanel.Dock="Top"
-                             ItemsSource="{ Binding publishers}" SelectedIndex="0">
+                             ItemsSource="{ Binding Publishers}" SelectedIndex="0">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Name}" />
@@ -139,23 +139,26 @@
                         </ListBox>
                         <Menu DockPanel.Dock="Bottom">
                             <MenuItem Header="Sort by">
-                                <MenuItem Header="Name"/>
+                                <MenuItem Header="Name" Click="MenuItem_Click_10"/>
                             </MenuItem>
                             <MenuItem Header="Group by">
-                                <MenuItem Header="City"/>
+                                <MenuItem Header="City" Click="MenuItem_Click_11"/>
                             </MenuItem>
                         </Menu>
                     </DockPanel>
 
                     <DockPanel Grid.Column="1">
-                        <ToolBarTray DockPanel.Dock="Top" Height="30">
+                        <Grid DockPanel.Dock="Top" Height="30">
                             <ToolBar Width="{Binding ActualWidth,
                                  RelativeSource={RelativeSource FindAncestor,
                                                AncestorType={x:Type ToolBarTray}}}">
                                 <Button Click="Button_Click_2">Edit</Button>
                                 <Button Click="Button_Click_3">Delete</Button>
                             </ToolBar>
-                        </ToolBarTray>
+                            <ToolBar HorizontalAlignment="Right">
+                                <TextBox Width="200" TextChanged="TextBox_TextChanged"/>
+                            </ToolBar>
+                        </Grid>
 
                         <StackPanel Name="PublisherView" Margin="10" DataContext="{Binding SelectedItem, ElementName=PublisherGrid, UpdateSourceTrigger=PropertyChanged}">
                             <Label HorizontalAlignment="Center" Content="{Binding Name}" FontSize="22"/>
@@ -196,7 +199,7 @@
 
                     <DockPanel>
                         <ListBox Name="AuthorGrid" Height="400" Grid.Column="0" DockPanel.Dock="Top"
-                                 ItemsSource="{Binding authors}" SelectedIndex="0" Width="200">
+                                 ItemsSource="{Binding Authors}" SelectedIndex="0" Width="200">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Name}"/>
@@ -205,21 +208,24 @@
                         </ListBox>
                         <Menu DockPanel.Dock="Bottom">
                             <MenuItem Header="Sort by">
-                                <MenuItem Header="Name"/>
-                                <MenuItem Header="Birthday"/>
+                                <MenuItem Header="Name" Click="MenuItem_Click_12"/>
+                                <MenuItem Header="Birthday" Click="MenuItem_Click_13"/>
                             </MenuItem>
                         </Menu>
                     </DockPanel>
 
                     <DockPanel Grid.Column="1">
-                        <ToolBarTray DockPanel.Dock="Top" Height="30">
+                        <Grid DockPanel.Dock="Top" Height="30">
                             <ToolBar Width="{Binding ActualWidth,
                                  RelativeSource={RelativeSource FindAncestor,
                                                AncestorType={x:Type ToolBarTray}}}">
                                 <Button Click="Button_Click_4">Edit</Button>
                                 <Button Click="Button_Click_5">Delete</Button>
                             </ToolBar>
-                        </ToolBarTray>
+                            <ToolBar HorizontalAlignment="Right">
+                                <TextBox Width="200" TextChanged="TextBox_TextChanged_1"/>
+                            </ToolBar>
+                        </Grid>
 
                         <StackPanel Name="AuthorView" Margin="10" 
                                     DataContext="{Binding SelectedItem, ElementName=AuthorGrid, UpdateSourceTrigger=PropertyChanged}">
