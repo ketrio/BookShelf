@@ -16,6 +16,7 @@ using System.IO.Compression;
 using System.Threading;
 using System.Windows.Media.Imaging;
 using BookShelf.PluginSystem;
+using System.Windows.Controls;
 
 namespace BookShelf
 {
@@ -192,13 +193,62 @@ namespace BookShelf
             }
         }
         LibraryData _libraryData;
-        public List<Type> plugins = PluginLoader.Load(Path.GetFullPath("Plugins/"));
+        public List<Type> plugins;
+
+        async private void UpdatePlugins()
+        {
+            await Task.Delay(2000);
+            await Task.Run(new Action(() => {
+                plugins = PluginLoader.Load(Path.GetFullPath("Plugins/"));
+                Dispatcher.InvokeAsync(new Action(() => UpdatePluginMenu()));
+            }));
+        }
+
+        async private void UpdatePluginMenu()
+        {
+            await Dispatcher.InvokeAsync(new Action(() =>
+            {
+                MenuItem PluginMenu = new MenuItem();
+                PluginMenu.Header = "Plugins";
+
+                MenuItem item;
+                Parallel.ForEach((Application.Current as App).plugins, type =>
+                {
+                    item = new MenuItem();
+                    item.Header = (type.GetCustomAttributes(typeof(PluginInfo), false)[0] as PluginInfo).Name;
+
+                    item.Click += new RoutedEventHandler((obj, e) =>
+                        ((IPlugin)Activator.CreateInstance(type, Application.Current)).Impact());
+
+                    PluginMenu.Items.Add(item);
+                });
+
+                //foreach (Type type in (Application.Current as App).plugins)
+                //{
+                //    item = new MenuItem();
+                //    item.Header = (type.GetCustomAttributes(typeof(PluginInfo), false)[0] as PluginInfo).Name;
+
+                //    item.Click += new RoutedEventHandler((obj, e) =>
+                //        ((IPlugin)Activator.CreateInstance(type, Application.Current)).Impact());
+
+                //    PluginMenu.Items.Add(item);
+                //}
+
+                item = new MenuItem();
+                item.Header = ("Reset appearance");
+                item.Click += new RoutedEventHandler((obj, e) => Application.Current.Resources.Clear());
+                PluginMenu.Items.Add(item);
+
+                (Current.MainWindow as MainWindow).TopMenu.Items.Add(PluginMenu);
+            }));
+        }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
             LibraryData = new LibraryData("BookShelf.dat");
             LibraryData.watcher.Changed += Watcher_Changed;
+            UpdatePlugins();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

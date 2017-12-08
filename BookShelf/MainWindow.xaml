@@ -14,7 +14,7 @@
         <local:ArrayToStringConverter x:Key="ArrayToStringConverter"/>
     </Window.Resources>
     <DockPanel LastChildFill="True" Name="root">
-        <Menu DockPanel.Dock="Top">
+        <Menu DockPanel.Dock="Top" Name="TopMenu">
             <MenuItem Header="File">
                 <MenuItem Header="Load" Click="MenuItem_Click_3"/>
                 <MenuItem Header="Save" Click="MenuItem_Click_4"/>
@@ -24,9 +24,9 @@
                 <MenuItem Header="Author" Click="MenuItem_Click_2"/>
                 <MenuItem Header="Publisher" Click="MenuItem_Click_1"/>
             </MenuItem>
-            <MenuItem Name="PluginMenu" Header="Plugins">
+            <!--<MenuItem Name="PluginMenu" Header="Plugins">
                 <MenuItem Header="Reset appearance" Click="MenuItem_Click_5"/>
-            </MenuItem>
+            </MenuItem>-->
         </Menu>
 
         <StatusBar DockPanel.Dock="Bottom" VerticalAlignment="Bottom"  Height="20">
@@ -73,7 +73,12 @@
                                                AncestorType={x:Type ToolBarTray}}}">
                                 <Button Click="Button_Click_1">Edit</Button>
                                 <Button Click="Button_Click">Delete</Button>
-
+                            </ToolBar>
+                            <ToolBar HorizontalAlignment="Right">
+                                <Button>First</Button>
+                                <Button>Prev</Button>
+                                <Button>Next</Button>
+                                <Button>Last</Button>
                             </ToolBar>
                         </Grid>
                         
