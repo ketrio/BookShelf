@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Books" Height="618.096" Width="516.213" ResizeMode="NoResize">
     <Window.Resources>
-        <local:ArrayToStringConverter x:Key="ArrayToStringConverter"/> 
+        <local:ArrayToStringConverter x:Key="ArrayToStringConverter"/>
     </Window.Resources>
     <StackPanel Margin="10" Name="root" KeyUp="root_KeyUp">
         <StackPanel.Resources>
