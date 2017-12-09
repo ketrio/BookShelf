@@ -1,0 +1,46 @@
+﻿<Page x:Class="BookShelf.Pages.BookOverview"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BookShelf.Pages"
+      mc:Ignorable="d" 
+      Title="BookOverview">
+
+
+    <Page.Resources>
+        <local:ArrayToStringConverter x:Key="ArrayToStringConverter"/>
+    </Page.Resources>
+
+    <StackPanel Name="BookView" Margin="10" Width="500">
+        <Label HorizontalAlignment="Center" FontSize="22" Content="{Binding Title, UpdateSourceTrigger=PropertyChanged}"></Label>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Column="0" Grid.Row="0" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">ISBN:</Label>
+            <Label Grid.Column="0" Grid.Row="1" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">AUTHOR:</Label>
+            <Label Grid.Column="0" Grid.Row="2" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">PUBLISHER:</Label>
+            <Label Grid.Column="0" Grid.Row="3" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">PUBLISHED:</Label>
+            <Label Grid.Column="0" Grid.Row="4" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">PAGES:</Label>
+            <Label Grid.Column="0" Grid.Row="5" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">Tags:</Label>
+
+            <Label Grid.Column="1" Grid.Row="0" FontSize="15" Content="{Binding ISBN}"></Label>
+            <Label Grid.Column="1" Grid.Row="1" FontSize="15" Content="{Binding Author}"></Label>
+            <Label Grid.Column="1" Grid.Row="2" FontSize="15" Content="{Binding Publisher}"></Label>
+            <Label Grid.Column="1" Grid.Row="3" FontSize="15" Content="{Binding PublishDate}"></Label>
+            <Label Grid.Column="1" Grid.Row="4" FontSize="15" Content="{Binding Pages}"></Label>
+            <Label Grid.Column="1" Grid.Row="5" FontSize="15" Content="{Binding Tags, Converter={StaticResource ArrayToStringConverter}}"></Label>
+        </Grid>
+    </StackPanel>
+</Page>

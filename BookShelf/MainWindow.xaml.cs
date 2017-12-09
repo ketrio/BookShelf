@@ -16,6 +16,7 @@ using Models;
 using System.Collections.ObjectModel;
 using Microsoft.Win32;
 using BookShelf.PluginSystem;
+using BookShelf.Pages;
 
 namespace BookShelf
 {
@@ -126,8 +127,6 @@ namespace BookShelf
 
         private void BookGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            if (BookView != null)
-                BookView.Visibility = Visibility.Visible;
         }
 
         private void PublisherGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -331,6 +330,13 @@ namespace BookShelf
                     PublisherGrid.SelectedIndex = 0;
                 }
             }
+        }
+
+        private void BookGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var page = new BookOverview();
+            page.DataContext = BookGrid.SelectedValue;
+            BookView.Content = page;
         }
     }
 }

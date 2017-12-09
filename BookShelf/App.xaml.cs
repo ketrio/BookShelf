@@ -212,7 +212,8 @@ namespace BookShelf
                 PluginMenu.Header = "Plugins";
 
                 MenuItem item;
-                Parallel.ForEach((Application.Current as App).plugins, type =>
+
+                foreach (Type type in (Application.Current as App).plugins)
                 {
                     item = new MenuItem();
                     item.Header = (type.GetCustomAttributes(typeof(PluginInfo), false)[0] as PluginInfo).Name;
@@ -221,18 +222,7 @@ namespace BookShelf
                         ((IPlugin)Activator.CreateInstance(type, Application.Current)).Impact());
 
                     PluginMenu.Items.Add(item);
-                });
-
-                //foreach (Type type in (Application.Current as App).plugins)
-                //{
-                //    item = new MenuItem();
-                //    item.Header = (type.GetCustomAttributes(typeof(PluginInfo), false)[0] as PluginInfo).Name;
-
-                //    item.Click += new RoutedEventHandler((obj, e) =>
-                //        ((IPlugin)Activator.CreateInstance(type, Application.Current)).Impact());
-
-                //    PluginMenu.Items.Add(item);
-                //}
+                }
 
                 item = new MenuItem();
                 item.Header = ("Reset appearance");

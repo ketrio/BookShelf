@@ -59,6 +59,9 @@
       <DependentUpon>Books.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models.cs" />
+    <Compile Include="Pages\BookOverview.xaml.cs">
+      <DependentUpon>BookOverview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PluginSystem\IPlugin.cs" />
     <Compile Include="PluginSystem\PluginLoader.cs" />
     <Compile Include="Publishers.xaml.cs">
@@ -87,6 +90,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\BookOverview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Publishers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -121,5 +128,6 @@
   <ItemGroup>
     <Resource Include="images\photo.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

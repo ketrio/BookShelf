@@ -10,9 +10,6 @@
     <Window.DataContext>
         <Binding Path="LibraryData" Source="{x:Static Application.Current}" UpdateSourceTrigger="PropertyChanged"/>
     </Window.DataContext>
-    <Window.Resources>
-        <local:ArrayToStringConverter x:Key="ArrayToStringConverter"/>
-    </Window.Resources>
     <DockPanel LastChildFill="True" Name="root">
         <Menu DockPanel.Dock="Top" Name="TopMenu">
             <MenuItem Header="File">
@@ -45,7 +42,7 @@
 
                     <StackPanel>
                         <TextBox Height="25" Width="200" FontSize="16" TextChanged="SearchBox_TextChanged"/>
-                        <ListBox Name="BookGrid" Width="200" Height="375"
+                        <ListBox Name="BookGrid" Width="200" Height="375" SelectionChanged="BookGrid_SelectionChanged"
                           DockPanel.Dock="Top" ItemsSource="{Binding Books, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
@@ -81,39 +78,9 @@
                                 <Button>Last</Button>
                             </ToolBar>
                         </Grid>
-                        
 
-                        <StackPanel Name="BookView" Margin="10" DataContext="{Binding SelectedItem, ElementName=BookGrid, UpdateSourceTrigger=PropertyChanged}">
-                            <Label HorizontalAlignment="Center" FontSize="22" Content="{Binding Title, UpdateSourceTrigger=PropertyChanged}"></Label>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
 
-                                <Label Grid.Column="0" Grid.Row="0" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">ISBN:</Label>
-                                <Label Grid.Column="0" Grid.Row="1" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">AUTHOR:</Label>
-                                <Label Grid.Column="0" Grid.Row="2" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">PUBLISHER:</Label>
-                                <Label Grid.Column="0" Grid.Row="3" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">PUBLISHED:</Label>
-                                <Label Grid.Column="0" Grid.Row="4" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">PAGES:</Label>
-                                <Label Grid.Column="0" Grid.Row="5" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">Tags:</Label>
-
-                                <Label Grid.Column="1" Grid.Row="0" FontSize="15" Content="{Binding ISBN}"></Label>
-                                <Label Grid.Column="1" Grid.Row="1" FontSize="15" Content="{Binding Author}"></Label>
-                                <Label Grid.Column="1" Grid.Row="2" FontSize="15" Content="{Binding Publisher}"></Label>
-                                <Label Grid.Column="1" Grid.Row="3" FontSize="15" Content="{Binding PublishDate}"></Label>
-                                <Label Grid.Column="1" Grid.Row="4" FontSize="15" Content="{Binding Pages}"></Label>
-                                <Label Grid.Column="1" Grid.Row="5" FontSize="15" Content="{Binding Tags, Converter={StaticResource ArrayToStringConverter}}"></Label>
-                            </Grid>
-                        </StackPanel>
+                        <Frame Name="BookView" Source="Pages/BookOverview.xaml" NavigationUIVisibility="Hidden" DataContext="{Binding SelectedItem, ElementName=BookGrid, UpdateSourceTrigger=PropertyChanged}"/>
                     </DockPanel>
                 </Grid>
             </TabItem>
