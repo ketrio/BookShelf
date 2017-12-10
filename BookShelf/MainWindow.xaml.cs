@@ -16,6 +16,7 @@ using Models;
 using System.Collections.ObjectModel;
 using Microsoft.Win32;
 using BookShelf.PluginSystem;
+using BookShelf.Pages;
 
 namespace BookShelf
 {
@@ -29,18 +30,11 @@ namespace BookShelf
         public MainWindow()
         {
             InitializeComponent();
+
+            //BookLoader = new PageLoader(AppCur.LibraryData.Books.ToList<object>(), typeof(BookOverview));
+            //AuthorLoader = new PageLoader(AppCur.LibraryData.Authors.ToList<object>(), typeof(AuthorOverview));
+            //PublisherLoader = new PageLoader(AppCur.LibraryData.Publishers.ToList<object>(), typeof(PublisherOverview));
             
-
-            foreach (Type type in (Application.Current as App).plugins)
-            {
-                MenuItem item = new MenuItem();
-                item.Header = (type.GetCustomAttributes(typeof(PluginInfo), false)[0] as PluginInfo).Name;
-                
-                item.Click += new RoutedEventHandler((obj, e) =>
-                    ((IPlugin)Activator.CreateInstance(type, Application.Current)).Impact());
-
-                PluginMenu.Items.Add(item);
-            }
         }
 
         // Delete Book
@@ -138,8 +132,6 @@ namespace BookShelf
 
         private void BookGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            if (BookView != null)
-                BookView.Visibility = Visibility.Visible;
         }
 
         private void PublisherGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -199,7 +191,7 @@ namespace BookShelf
 
         private void MenuItem_Click_6(object sender, RoutedEventArgs e)
         {
-            var ordered = from book in AppCur.LibraryData.Books
+            var ordered = from book in AppCur.LibraryData.Books.AsParallel()
                                        orderby book.Title
                                        select book;
             AppCur.LibraryData.Books = new ObservableCollection<Book>(ordered);
@@ -208,7 +200,7 @@ namespace BookShelf
 
         private void MenuItem_Click_7(object sender, RoutedEventArgs e)
         {
-            var ordered = from book in AppCur.LibraryData.Books
+            var ordered = from book in AppCur.LibraryData.Books.AsParallel()
                           orderby book.Pages
                           select book;
             AppCur.LibraryData.Books = new ObservableCollection<Book>(ordered);
@@ -218,12 +210,12 @@ namespace BookShelf
         private void MenuItem_Click_8(object sender, RoutedEventArgs e)
         {
             var list = new List<Book>();
-            var grouped = from book in AppCur.LibraryData.Books
+            var grouped = from book in AppCur.LibraryData.Books.AsParallel()
                           group book by book.Author into g
                           select g;
-            foreach(var group in grouped)
+            foreach(var group in grouped.AsParallel())
             {
-                foreach (var book in group)
+                foreach (var book in group.AsParallel())
                 {
                     list.Add(book);
                 }
@@ -234,12 +226,12 @@ namespace BookShelf
         private void MenuItem_Click_9(object sender, RoutedEventArgs e)
         {
             var list = new List<Book>();
-            var grouped = from book in AppCur.LibraryData.Books
+            var grouped = from book in AppCur.LibraryData.Books.AsParallel()
                           group book by book.Publisher.Name into g
                           select g;
-            foreach (var group in grouped)
+            foreach (var group in grouped.AsParallel())
             {
-                foreach (var book in group)
+                foreach (var book in group.AsParallel())
                 {
                     list.Add(book);
                 }
@@ -249,7 +241,7 @@ namespace BookShelf
 
         private void MenuItem_Click_10(object sender, RoutedEventArgs e)
         {
-            var ordered = from publ in AppCur.LibraryData.Publishers
+            var ordered = from publ in AppCur.LibraryData.Publishers.AsParallel()
                           orderby publ.Name
                           select publ;
             AppCur.LibraryData.Publishers = new ObservableCollection<Publisher>(ordered);
@@ -258,12 +250,12 @@ namespace BookShelf
         private void MenuItem_Click_11(object sender, RoutedEventArgs e)
         {
             var list = new List<Publisher>();
-            var grouped = from publ in AppCur.LibraryData.Publishers
+            var grouped = from publ in AppCur.LibraryData.Publishers.AsParallel()
                           group publ by publ.Name into g
                           select g;
-            foreach (var group in grouped)
+            foreach (var group in grouped.AsParallel())
             {
-                foreach (var book in group)
+                foreach (var book in group.AsParallel())
                 {
                     list.Add(book);
                 }
@@ -273,7 +265,7 @@ namespace BookShelf
 
         private void MenuItem_Click_12(object sender, RoutedEventArgs e)
         {
-            var ordered = from author in AppCur.LibraryData.Authors
+            var ordered = from author in AppCur.LibraryData.Authors.AsParallel()
                           orderby author.Name
                           select author;
             AppCur.LibraryData.Authors = new ObservableCollection<Author>(ordered);
@@ -281,7 +273,7 @@ namespace BookShelf
 
         private void MenuItem_Click_13(object sender, RoutedEventArgs e)
         {
-            var ordered = from author in AppCur.LibraryData.Authors
+            var ordered = from author in AppCur.LibraryData.Authors.AsParallel()
                           orderby author.BirthDate
                           select author;
             AppCur.LibraryData.Authors = new ObservableCollection<Author>(ordered);
@@ -300,8 +292,10 @@ namespace BookShelf
                 }
                 else
                 {
-                    BookGrid.ItemsSource = AppCur.LibraryData.Books
-                        .Where(book => book.Title.ToLower().Contains(textBox.Text.ToLower()) || book.Tags.Any(tag => tag.ToLower().Contains(textBox.Text.ToLower())));
+                    BookGrid.ItemsSource = AppCur.LibraryData.Books.AsParallel()
+                        .Where(book => book.Title.ToLower()
+                        .Contains(textBox.Text.ToLower()) || book.Tags.Any(tag => tag.ToLower()
+                        .Contains(textBox.Text.ToLower())));
                     BookGrid.SelectedIndex = 0;
                 }
             }
@@ -320,7 +314,8 @@ namespace BookShelf
                 }
                 else
                 {
-                    PublisherGrid.ItemsSource = AppCur.LibraryData.Publishers.Where(publ => publ.Name.ToLower().Contains(textBox.Text.ToLower()));
+                    PublisherGrid.ItemsSource = AppCur.LibraryData.Publishers.AsParallel()
+                        .Where(publ => publ.Name.ToLower().Contains(textBox.Text.ToLower()));
                     PublisherGrid.SelectedIndex = 0;
                 }
             }
@@ -339,10 +334,84 @@ namespace BookShelf
                 }
                 else
                 {
-                    PublisherGrid.ItemsSource = AppCur.LibraryData.Authors.Where(author => author.Name.ToLower().Contains(textBox.Text.ToLower()));
+                    PublisherGrid.ItemsSource = AppCur.LibraryData.Authors.AsParallel()
+                        .Where(author => author.Name.ToLower().Contains(textBox.Text.ToLower()));
                     PublisherGrid.SelectedIndex = 0;
                 }
             }
+        }
+
+        private void BookGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //var page = new BookOverview();
+            //page.DataContext = BookGrid.SelectedValue;
+            //BookView.Content = page;
+            BookView.Content = new BookOverview(BookGrid.SelectedValue);
+        }
+
+        private void PublisherGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //var page = new PublisherOverview();
+            //page.DataContext = PublisherGrid.SelectedValue;
+            PublisherView.Content = new PublisherOverview(PublisherGrid.SelectedValue);
+        }
+
+        private void AuthorGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //var page = new AuthorOverview(AuthorGrid.SelectedValue);
+            //page.DataContext = AuthorGrid.SelectedValue;
+            AuthorView.Content = new AuthorOverview(AuthorGrid.SelectedValue);
+        }
+
+        //private void Button_Click_6(object sender, RoutedEventArgs e)
+        //{
+        //    BookView.Content = BookLoader.First;
+        //    BookLoader.Position = 0;
+        //}
+
+        //private void Button_Click_7(object sender, RoutedEventArgs e)
+        //{
+        //    BookView.Content = BookLoader.Prev;
+        //    BookLoader.Position--;
+        //}
+
+        //private void Button_Click_8(object sender, RoutedEventArgs e)
+        //{
+        //    BookView.Content = BookLoader.Next;
+        //    BookLoader.Position++;
+        //}
+
+        //private void Button_Click_9(object sender, RoutedEventArgs e)
+        //{
+        //    BookView.Content = BookLoader.Last;
+        //    BookLoader.Position = AppCur.LibraryData.Books.Count;
+        //}
+
+        private void Button_Click_10(object sender, RoutedEventArgs e)
+        {
+            var bookLoader = new PageLoader(AppCur.LibraryData.Books.ToList<object>(), typeof(BookOverview));
+            bookLoader.Position = BookGrid.SelectedIndex;
+            var current = new BookOverview(BookGrid.SelectedValue);
+            var window = new PaginalView(bookLoader, current);
+            window.ShowDialog();
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            var publisherLoader = new PageLoader(AppCur.LibraryData.Publishers.ToList<object>(), typeof(PublisherOverview));
+            publisherLoader.Position = PublisherGrid.SelectedIndex;
+            var current = new PublisherOverview(PublisherGrid.SelectedValue);
+            var window = new PaginalView(publisherLoader, current);
+            window.ShowDialog();
+        }
+
+        private void Button_Click_7(object sender, RoutedEventArgs e)
+        {
+            var authorLoader = new PageLoader(AppCur.LibraryData.Authors.ToList<object>(), typeof(AuthorOverview));
+            authorLoader.Position = AuthorGrid.SelectedIndex;
+            var current = new AuthorOverview(AuthorGrid.SelectedValue);
+            var window = new PaginalView(authorLoader, current);
+            window.ShowDialog();
         }
     }
 }
