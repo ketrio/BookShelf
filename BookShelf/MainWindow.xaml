@@ -72,10 +72,17 @@
                                 <Button Click="Button_Click">Delete</Button>
                             </ToolBar>
                             <ToolBar HorizontalAlignment="Right" Name="BookPagination">
-                                <Button IsEnabled="{Binding BoundActive, UpdateSourceTrigger=PropertyChanged}" Click="Button_Click_6">First</Button>
-                                <Button IsEnabled="{Binding PrevActive, UpdateSourceTrigger=PropertyChanged}" Click="Button_Click_7">Prev</Button>
-                                <Button IsEnabled="{Binding NextActive, UpdateSourceTrigger=PropertyChanged}" Click="Button_Click_8">Next</Button>
-                                <Button IsEnabled="{Binding BoundActive, UpdateSourceTrigger=PropertyChanged}" Click="Button_Click_9">Last</Button>
+                                <Button Content="Paginal view" Click="Button_Click_10">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Books.Count}" Value="0">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                             </ToolBar>
                         </Grid>
 
@@ -126,6 +133,19 @@
                                 <Button Click="Button_Click_2">Edit</Button>
                                 <Button Click="Button_Click_3">Delete</Button>
                             </ToolBar>
+                            <ToolBar HorizontalAlignment="Right">
+                                <Button Content="Paginal view" Click="Button_Click_6">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Publishers.Count}" Value="0">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </ToolBar>
                         </Grid>
 
                         <Frame Margin="10" Name="PublisherView" NavigationUIVisibility="Hidden"/>
@@ -172,6 +192,19 @@
                                                AncestorType={x:Type ToolBarTray}}}">
                                 <Button Click="Button_Click_4">Edit</Button>
                                 <Button Click="Button_Click_5">Delete</Button>
+                            </ToolBar>
+                            <ToolBar HorizontalAlignment="Right">
+                                <Button Content="Paginal view" Click="Button_Click_7">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Authors.Count}" Value="0">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                             </ToolBar>
                         </Grid>
 

@@ -1,0 +1,18 @@
+﻿<Window x:Class="BookShelf.PaginalView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookShelf"
+        mc:Ignorable="d"
+        Title="PaginalView" Height="500" Width="500">
+    <DockPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Top">
+            <Button Click="Button_Click" Margin="20 0" Padding="10 0" Content="First"/>
+            <Button IsEnabled="{Binding PrevActive}" Click="Button_Click_1" Margin="20 0" Padding="10 0" Content="Previous"/>
+            <Button IsEnabled="{Binding NextActive}" Click="Button_Click_2" Margin="20 0" Padding="10 0" Content="Next"/>
+            <Button Click="Button_Click_3" Margin="20 0" Padding="10 0" Content="Last"/>
+        </StackPanel>
+        <Frame Name="View" NavigationUIVisibility="Hidden"/>
+    </DockPanel>
+</Window>

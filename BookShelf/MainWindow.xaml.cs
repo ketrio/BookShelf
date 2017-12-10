@@ -26,29 +26,15 @@ namespace BookShelf
     public partial class MainWindow : Window
     {
         public App AppCur { get; } = Application.Current as App;
-        PageLoader BookLoader { get; }
-        PageLoader AuthorLoader { get; }
-        PageLoader PublisherLoader { get; }
 
         public MainWindow()
         {
             InitializeComponent();
 
-            BookLoader = new PageLoader(AppCur.LibraryData.Books.ToList<object>(), typeof(BookOverview));
-            AuthorLoader = new PageLoader(AppCur.LibraryData.Authors.ToList<object>(), typeof(AuthorOverview));
-            PublisherLoader = new PageLoader(AppCur.LibraryData.Publishers.ToList<object>(), typeof(PublisherOverview));
-
-            BookPagination.DataContext = BookLoader;
-
-            AppCur.PropertyChanged += AppCur_PropertyChanged;
-        }
-
-        private void AppCur_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "LibraryData")
-            {
-                BookLoader.Collection = AppCur.LibraryData.Books.ToList<object>();
-            }
+            //BookLoader = new PageLoader(AppCur.LibraryData.Books.ToList<object>(), typeof(BookOverview));
+            //AuthorLoader = new PageLoader(AppCur.LibraryData.Authors.ToList<object>(), typeof(AuthorOverview));
+            //PublisherLoader = new PageLoader(AppCur.LibraryData.Publishers.ToList<object>(), typeof(PublisherOverview));
+            
         }
 
         // Delete Book
@@ -377,28 +363,55 @@ namespace BookShelf
             AuthorView.Content = new AuthorOverview(AuthorGrid.SelectedValue);
         }
 
+        //private void Button_Click_6(object sender, RoutedEventArgs e)
+        //{
+        //    BookView.Content = BookLoader.First;
+        //    BookLoader.Position = 0;
+        //}
+
+        //private void Button_Click_7(object sender, RoutedEventArgs e)
+        //{
+        //    BookView.Content = BookLoader.Prev;
+        //    BookLoader.Position--;
+        //}
+
+        //private void Button_Click_8(object sender, RoutedEventArgs e)
+        //{
+        //    BookView.Content = BookLoader.Next;
+        //    BookLoader.Position++;
+        //}
+
+        //private void Button_Click_9(object sender, RoutedEventArgs e)
+        //{
+        //    BookView.Content = BookLoader.Last;
+        //    BookLoader.Position = AppCur.LibraryData.Books.Count;
+        //}
+
+        private void Button_Click_10(object sender, RoutedEventArgs e)
+        {
+            var bookLoader = new PageLoader(AppCur.LibraryData.Books.ToList<object>(), typeof(BookOverview));
+            bookLoader.Position = BookGrid.SelectedIndex;
+            var current = new BookOverview(BookGrid.SelectedValue);
+            var window = new PaginalView(bookLoader, current);
+            window.ShowDialog();
+        }
+
         private void Button_Click_6(object sender, RoutedEventArgs e)
         {
-            BookView.Content = BookLoader.First;
-            BookLoader.Position = 0;
+            var publisherLoader = new PageLoader(AppCur.LibraryData.Publishers.ToList<object>(), typeof(PublisherOverview));
+            publisherLoader.Position = PublisherGrid.SelectedIndex;
+            var current = new PublisherOverview(PublisherGrid.SelectedValue);
+            var window = new PaginalView(publisherLoader, current);
+            window.ShowDialog();
         }
 
         private void Button_Click_7(object sender, RoutedEventArgs e)
         {
-            BookView.Content = BookLoader.Prev;
-            BookLoader.Position--;
-        }
-
-        private void Button_Click_8(object sender, RoutedEventArgs e)
-        {
-            BookView.Content = BookLoader.Next;
-            BookLoader.Position++;
-        }
-
-        private void Button_Click_9(object sender, RoutedEventArgs e)
-        {
-            BookView.Content = BookLoader.Last;
-            BookLoader.Position = AppCur.LibraryData.Books.Count;
+            var authorLoader = new PageLoader(AppCur.LibraryData.Authors.ToList<object>(), typeof(AuthorOverview));
+            authorLoader.Position = AuthorGrid.SelectedIndex;
+            var current = new AuthorOverview(AuthorGrid.SelectedValue);
+            var window = new PaginalView(authorLoader, current);
+            window.ShowDialog();
         }
     }
 }

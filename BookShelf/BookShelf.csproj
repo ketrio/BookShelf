@@ -69,6 +69,9 @@
     <Compile Include="Pages\PublisherOverview.xaml.cs">
       <DependentUpon>PublisherOverview.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PaginalView.xaml.cs">
+      <DependentUpon>PaginalView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PluginSystem\IPlugin.cs" />
     <Compile Include="PluginSystem\PluginLoader.cs" />
     <Compile Include="Publishers.xaml.cs">
@@ -106,6 +109,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PublisherOverview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PaginalView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
