@@ -80,7 +80,7 @@
                         </Grid>
 
 
-                        <Frame Name="BookView" Source="Pages/BookOverview.xaml" NavigationUIVisibility="Hidden" DataContext="{Binding SelectedItem, ElementName=BookGrid, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Frame Name="BookView" Margin="10" Source="Pages/BookOverview.xaml" NavigationUIVisibility="Hidden"/>
                     </DockPanel>
                 </Grid>
             </TabItem>
@@ -100,7 +100,7 @@
 
                     <StackPanel>
                         <TextBox Height="25" FontSize="16" Width="200" TextChanged="TextBox_TextChanged"/>
-                        <ListBox Name="PublisherGrid" Width="200" Height="375" DockPanel.Dock="Top"
+                        <ListBox Name="PublisherGrid" Width="200" Height="375" DockPanel.Dock="Top" SelectionChanged="PublisherGrid_SelectionChanged"
                              ItemsSource="{ Binding Publishers}" SelectedIndex="0">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
@@ -128,25 +128,7 @@
                             </ToolBar>
                         </Grid>
 
-                        <StackPanel Name="PublisherView" Margin="10" DataContext="{Binding SelectedItem, ElementName=PublisherGrid, UpdateSourceTrigger=PropertyChanged}">
-                            <Label HorizontalAlignment="Center" Content="{Binding Name}" FontSize="22"/>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-
-                                <Label Grid.Column="0" Grid.Row="0" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">CITY:</Label>
-                                <Label Grid.Column="0" Grid.Row="1" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">BOOKS:</Label>
-
-                                <Label Grid.Column="1" Grid.Row="0" FontSize="15" Content="{Binding City}"></Label>
-                                <ListBox Margin="0 2 0 0" BorderThickness="0" FontSize="15" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Books, UpdateSourceTrigger=PropertyChanged}"/>
-                            </Grid>
-                        </StackPanel>
+                        <Frame Margin="10" Name="PublisherView" NavigationUIVisibility="Hidden"/>
                     </DockPanel>
                 </Grid>
             </TabItem>
@@ -167,7 +149,7 @@
 
                     <StackPanel>
                         <TextBox Height="25" FontSize="16" Width="200" TextChanged="TextBox_TextChanged_1"/>
-                        <ListBox Name="AuthorGrid" Height="375" Grid.Column="0" DockPanel.Dock="Top"
+                        <ListBox Name="AuthorGrid" Height="375" Grid.Column="0" DockPanel.Dock="Top" SelectionChanged="AuthorGrid_SelectionChanged"
                                  ItemsSource="{Binding Authors}" SelectedIndex="0" Width="200">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
@@ -193,27 +175,7 @@
                             </ToolBar>
                         </Grid>
 
-                        <StackPanel Name="AuthorView" Margin="10" 
-                                    DataContext="{Binding SelectedItem, ElementName=AuthorGrid, UpdateSourceTrigger=PropertyChanged}">
-                            <Image Width="150" Height="150" HorizontalAlignment="Center" Source="{Binding Image}"/>
-                            <Label FontSize="22" HorizontalAlignment="Center" Content="{Binding Name}"/>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-
-                                <Label Grid.Column="0" Grid.Row="0" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">BIRTHDAY:</Label>
-                                <Label Grid.Column="0" Grid.Row="1" Foreground="#228B22" FontSize="15" HorizontalAlignment="Right">BOOKS:</Label>
-
-                                <Label Grid.Column="1" Grid.Row="0" FontSize="15" Content="{Binding BirthDate, UpdateSourceTrigger=PropertyChanged}"/>
-                                <ListBox Margin="0 2 0 0" BorderThickness="0" FontSize="15" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Books, UpdateSourceTrigger=PropertyChanged}"/>
-                            </Grid>
-                        </StackPanel>
+                        <Frame Name="AuthorView" Margin="10" NavigationUIVisibility="Hidden"/>
                     </DockPanel>
                 </Grid>
             </TabItem>

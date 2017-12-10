@@ -338,5 +338,19 @@ namespace BookShelf
             page.DataContext = BookGrid.SelectedValue;
             BookView.Content = page;
         }
+
+        private void PublisherGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var page = new PublisherOverview();
+            page.DataContext = PublisherGrid.SelectedValue;
+            PublisherView.Content = page;
+        }
+
+        private void AuthorGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var page = new AuthorOverview();
+            page.DataContext = AuthorGrid.SelectedValue;
+            AuthorView.Content = page;
+        }
     }
 }

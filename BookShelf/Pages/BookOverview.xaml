@@ -12,7 +12,7 @@
         <local:ArrayToStringConverter x:Key="ArrayToStringConverter"/>
     </Page.Resources>
 
-    <StackPanel Name="BookView" Margin="10" Width="500">
+    <StackPanel Name="BookView" Width="500">
         <Label HorizontalAlignment="Center" FontSize="22" Content="{Binding Title, UpdateSourceTrigger=PropertyChanged}"></Label>
         <Grid>
             <Grid.ColumnDefinitions>
