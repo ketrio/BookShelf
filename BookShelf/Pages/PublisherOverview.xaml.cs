@@ -20,9 +20,11 @@ namespace BookShelf.Pages
     /// </summary>
     public partial class PublisherOverview : Page
     {
-        public PublisherOverview()
+        public PublisherOverview(object context)
         {
             InitializeComponent();
+            if (context == null) Visibility = Visibility.Hidden;
+            else DataContext = context;
         }
     }
 }

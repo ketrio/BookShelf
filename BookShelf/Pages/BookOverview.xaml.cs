@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,27 +20,11 @@ namespace BookShelf.Pages
     /// </summary>
     public partial class BookOverview : Page
     {
-        public BookOverview()
+        public BookOverview(object context)
         {
             InitializeComponent();
-        }
-    }
-
-    public class ArrayToStringConverter : IValueConverter
-    {
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value != null)
-            {
-                return String.Join(", ", value as String[]);
-            }
-            return null;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (value as String)?.Replace(", ", ",").Split(',');
+            if (context == null) Visibility = Visibility.Hidden;
+            else DataContext = context;
         }
     }
 }

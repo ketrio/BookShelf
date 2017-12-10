@@ -26,10 +26,29 @@ namespace BookShelf
     public partial class MainWindow : Window
     {
         public App AppCur { get; } = Application.Current as App;
+        PageLoader BookLoader { get; }
+        PageLoader AuthorLoader { get; }
+        PageLoader PublisherLoader { get; }
 
         public MainWindow()
         {
             InitializeComponent();
+
+            BookLoader = new PageLoader(AppCur.LibraryData.Books.ToList<object>(), typeof(BookOverview));
+            AuthorLoader = new PageLoader(AppCur.LibraryData.Authors.ToList<object>(), typeof(AuthorOverview));
+            PublisherLoader = new PageLoader(AppCur.LibraryData.Publishers.ToList<object>(), typeof(PublisherOverview));
+
+            BookPagination.DataContext = BookLoader;
+
+            AppCur.PropertyChanged += AppCur_PropertyChanged;
+        }
+
+        private void AppCur_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "LibraryData")
+            {
+                BookLoader.Collection = AppCur.LibraryData.Books.ToList<object>();
+            }
         }
 
         // Delete Book
@@ -288,7 +307,9 @@ namespace BookShelf
                 else
                 {
                     BookGrid.ItemsSource = AppCur.LibraryData.Books.AsParallel()
-                        .Where(book => book.Title.ToLower().Contains(textBox.Text.ToLower()) || book.Tags.Any(tag => tag.ToLower().Contains(textBox.Text.ToLower())));
+                        .Where(book => book.Title.ToLower()
+                        .Contains(textBox.Text.ToLower()) || book.Tags.Any(tag => tag.ToLower()
+                        .Contains(textBox.Text.ToLower())));
                     BookGrid.SelectedIndex = 0;
                 }
             }
@@ -307,7 +328,8 @@ namespace BookShelf
                 }
                 else
                 {
-                    PublisherGrid.ItemsSource = AppCur.LibraryData.Publishers.AsParallel().Where(publ => publ.Name.ToLower().Contains(textBox.Text.ToLower()));
+                    PublisherGrid.ItemsSource = AppCur.LibraryData.Publishers.AsParallel()
+                        .Where(publ => publ.Name.ToLower().Contains(textBox.Text.ToLower()));
                     PublisherGrid.SelectedIndex = 0;
                 }
             }
@@ -326,7 +348,8 @@ namespace BookShelf
                 }
                 else
                 {
-                    PublisherGrid.ItemsSource = AppCur.LibraryData.Authors.AsParallel().Where(author => author.Name.ToLower().Contains(textBox.Text.ToLower()));
+                    PublisherGrid.ItemsSource = AppCur.LibraryData.Authors.AsParallel()
+                        .Where(author => author.Name.ToLower().Contains(textBox.Text.ToLower()));
                     PublisherGrid.SelectedIndex = 0;
                 }
             }
@@ -334,23 +357,48 @@ namespace BookShelf
 
         private void BookGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var page = new BookOverview();
-            page.DataContext = BookGrid.SelectedValue;
-            BookView.Content = page;
+            //var page = new BookOverview();
+            //page.DataContext = BookGrid.SelectedValue;
+            //BookView.Content = page;
+            BookView.Content = new BookOverview(BookGrid.SelectedValue);
         }
 
         private void PublisherGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var page = new PublisherOverview();
-            page.DataContext = PublisherGrid.SelectedValue;
-            PublisherView.Content = page;
+            //var page = new PublisherOverview();
+            //page.DataContext = PublisherGrid.SelectedValue;
+            PublisherView.Content = new PublisherOverview(PublisherGrid.SelectedValue);
         }
 
         private void AuthorGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var page = new AuthorOverview();
-            page.DataContext = AuthorGrid.SelectedValue;
-            AuthorView.Content = page;
+            //var page = new AuthorOverview(AuthorGrid.SelectedValue);
+            //page.DataContext = AuthorGrid.SelectedValue;
+            AuthorView.Content = new AuthorOverview(AuthorGrid.SelectedValue);
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            BookView.Content = BookLoader.First;
+            BookLoader.Position = 0;
+        }
+
+        private void Button_Click_7(object sender, RoutedEventArgs e)
+        {
+            BookView.Content = BookLoader.Prev;
+            BookLoader.Position--;
+        }
+
+        private void Button_Click_8(object sender, RoutedEventArgs e)
+        {
+            BookView.Content = BookLoader.Next;
+            BookLoader.Position++;
+        }
+
+        private void Button_Click_9(object sender, RoutedEventArgs e)
+        {
+            BookView.Content = BookLoader.Last;
+            BookLoader.Position = AppCur.LibraryData.Books.Count;
         }
     }
 }

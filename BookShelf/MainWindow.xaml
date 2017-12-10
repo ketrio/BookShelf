@@ -71,16 +71,16 @@
                                 <Button Click="Button_Click_1">Edit</Button>
                                 <Button Click="Button_Click">Delete</Button>
                             </ToolBar>
-                            <ToolBar HorizontalAlignment="Right">
-                                <Button>First</Button>
-                                <Button>Prev</Button>
-                                <Button>Next</Button>
-                                <Button>Last</Button>
+                            <ToolBar HorizontalAlignment="Right" Name="BookPagination">
+                                <Button IsEnabled="{Binding BoundActive, UpdateSourceTrigger=PropertyChanged}" Click="Button_Click_6">First</Button>
+                                <Button IsEnabled="{Binding PrevActive, UpdateSourceTrigger=PropertyChanged}" Click="Button_Click_7">Prev</Button>
+                                <Button IsEnabled="{Binding NextActive, UpdateSourceTrigger=PropertyChanged}" Click="Button_Click_8">Next</Button>
+                                <Button IsEnabled="{Binding BoundActive, UpdateSourceTrigger=PropertyChanged}" Click="Button_Click_9">Last</Button>
                             </ToolBar>
                         </Grid>
 
 
-                        <Frame Name="BookView" Margin="10" Source="Pages/BookOverview.xaml" NavigationUIVisibility="Hidden"/>
+                        <Frame Name="BookView" Margin="10" NavigationUIVisibility="Hidden"/>
                     </DockPanel>
                 </Grid>
             </TabItem>

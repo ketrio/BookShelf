@@ -65,6 +65,7 @@
     <Compile Include="Pages\BookOverview.xaml.cs">
       <DependentUpon>BookOverview.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PageLoader.cs" />
     <Compile Include="Pages\PublisherOverview.xaml.cs">
       <DependentUpon>PublisherOverview.xaml</DependentUpon>
     </Compile>

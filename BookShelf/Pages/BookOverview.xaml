@@ -4,12 +4,12 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BookShelf.Pages"
+      xmlns:local1="clr-namespace:BookShelf"
       mc:Ignorable="d" 
       Title="BookOverview">
 
-
     <Page.Resources>
-        <local:ArrayToStringConverter x:Key="ArrayToStringConverter"/>
+        <local1:ArrayToStringConverter x:Key="ArrayToStringConverter"/>
     </Page.Resources>
 
     <StackPanel Name="BookView" Width="500">
