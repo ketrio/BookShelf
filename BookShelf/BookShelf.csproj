@@ -59,6 +59,7 @@
     <Compile Include="Books.xaml.cs">
       <DependentUpon>Books.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConfigHelpers\DirectoriesSection.cs" />
     <Compile Include="Hotkeys\HotkeyLoader.cs" />
     <Compile Include="Models.cs" />
     <Compile Include="Pages\AuthorOverview.xaml.cs">

@@ -18,8 +18,8 @@
     <DockPanel LastChildFill="True" Name="root">
         <Menu DockPanel.Dock="Top" Name="TopMenu">
             <MenuItem Header="File">
-                <MenuItem Header="Load" Click="MenuItem_Click_3"/>
-                <MenuItem Header="Save" Click="MenuItem_Click_4"/>
+                <MenuItem Header="Load" Click="MenuItem_Click_3" Command="{x:Static hotk:HotkeyLoader.LoadCommand}"/>
+                <MenuItem Header="Save" Click="MenuItem_Click_4" Command="{x:Static hotk:HotkeyLoader.SaveCommand}"/>
             </MenuItem>
             <MenuItem Header="Add">
                 <MenuItem Header="Book" Click="MenuItem_Click"/>

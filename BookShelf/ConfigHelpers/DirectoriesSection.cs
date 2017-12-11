@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+
+namespace BookShelf.ConfigHelpers
+{
+    public class PluginDirectoriesSection : IConfigurationSectionHandler
+    {
+        public object Create(object parent, object configContext, XmlNode section)
+        {
+            List<string> myConfigObject = new List<string>();
+
+            foreach (XmlNode childNode in section.ChildNodes)
+            {
+                if (childNode.NodeType == XmlNodeType.Comment) continue;
+                foreach (XmlAttribute attrib in childNode.Attributes)
+                {
+                    myConfigObject.Add(attrib.Value);
+                }
+            }
+            return myConfigObject;
+        }
+    }
+}
