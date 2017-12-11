@@ -151,8 +151,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\photo.png" />
+    <Resource Include="Images\photo.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\ext.png" />
+    <Resource Include="Images\file.png" />
+    <Resource Include="Images\library.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\carousel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\edit.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

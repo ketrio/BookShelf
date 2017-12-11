@@ -220,8 +220,7 @@ namespace BookShelf
         {
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                MenuItem PluginMenu = new MenuItem();
-                PluginMenu.Header = "Plugins";
+                MenuItem PluginMenu = (Current.MainWindow as MainWindow).PluginMenu;
 
                 MenuItem item;
 
@@ -236,12 +235,7 @@ namespace BookShelf
                     PluginMenu.Items.Add(item);
                 }
 
-                item = new MenuItem();
-                item.Header = ("Reset appearance");
-                item.Click += new RoutedEventHandler((obj, e) => Application.Current.Resources.Clear());
-                PluginMenu.Items.Add(item);
-
-                (Current.MainWindow as MainWindow).TopMenu.Items.Add(PluginMenu);
+                PluginMenu.Visibility = Visibility.Visible;
             }));
         }
 

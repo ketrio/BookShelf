@@ -26,18 +26,14 @@ namespace GreenAndBlackPlugin
         public override void Impact()
         {
             var dict = new ResourceDictionary();
-
-            var green = new Style(typeof(StackPanel));
-            green.Setters.Add(new Setter(Panel.BackgroundProperty, Brushes.PeachPuff));
-            var greenList = new Style(typeof(ListBox));
-            greenList.Setters.Add(new Setter(ListBox.BackgroundProperty, Brushes.PeachPuff));
+            
+            var greenList = new Style(typeof(Frame));
+            greenList.Setters.Add(new Setter(Frame.BackgroundProperty, Brushes.PeachPuff));
 
             var black = new Style(typeof(TextBlock));
-            black.Setters.Add(new Setter(TextBlock.ForegroundProperty, Brushes.Black));
+            black.Setters.Add(new Setter(TextBlock.ForegroundProperty, Brushes.DarkBlue));
             
-
-            dict.Add(typeof(StackPanel), green);
-            dict.Add(typeof(ListBox), greenList);
+            dict.Add(typeof(Frame), greenList);
             dict.Add(typeof(TextBlock), black);
 
             Application.Current.Resources = dict;
