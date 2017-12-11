@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace BookShelf.ConfigHelpers
 {
-    public class PluginDirectoriesSection : IConfigurationSectionHandler
+    public class PluginDirectories : IConfigurationSectionHandler
     {
         public object Create(object parent, object configContext, XmlNode section)
         {
@@ -23,6 +23,24 @@ namespace BookShelf.ConfigHelpers
                 }
             }
             return myConfigObject;
+        }
+    }
+
+    public class IconPathSection : IConfigurationSectionHandler
+    {
+        public object Create(object parent, object configContext, XmlNode section)
+        {
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+
+            foreach (XmlNode childNode in section.ChildNodes)
+            {
+                if (childNode.NodeType == XmlNodeType.Comment ||
+                    childNode.Attributes["icon"].Value == "" ||
+                    childNode.Attributes["location"].Value == "") continue;
+
+                dictionary.Add(childNode.Attributes["icon"].Value, childNode.Attributes["location"].Value);
+            }
+            return dictionary;
         }
     }
 }

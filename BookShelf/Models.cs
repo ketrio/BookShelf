@@ -201,7 +201,7 @@ namespace Models
         List<Book> _books;
         
         static public readonly BitmapImage defaultImage = 
-            new BitmapImage(new Uri(@"pack://application:,,,/images/photo.png "));
+            new BitmapImage(new Uri(@"pack://application:,,,/Images/photo.png "));
         [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
 

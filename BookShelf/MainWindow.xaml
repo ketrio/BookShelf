@@ -4,13 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookShelf"
-        xmlns:hotk="clr-namespace:BookShelf.Hotkeys"
+        xmlns:conf="clr-namespace:BookShelf.ConfigLoaders"
         mc:Ignorable="d"
         Title="MainWindow" Height="460" Width="750"
         MinWidth="800" MinHeight="500">
     <Window.CommandBindings>
-        <CommandBinding Command="{x:Static hotk:HotkeyLoader.SaveCommand}" Executed="CommandBinding_Executed"/>
-        <CommandBinding Command="{x:Static hotk:HotkeyLoader.LoadCommand}" Executed="CommandBinding_Executed_1"/>
+        <CommandBinding Command="{x:Static conf:HotkeyConfigLoader.SaveCommand}" Executed="CommandBinding_Executed"/>
+        <CommandBinding Command="{x:Static conf:HotkeyConfigLoader.LoadCommand}" Executed="CommandBinding_Executed_1"/>
     </Window.CommandBindings>
     <Window.DataContext>
         <Binding Path="LibraryData" Source="{x:Static Application.Current}" UpdateSourceTrigger="PropertyChanged"/>
@@ -23,14 +23,14 @@
                         <Image Width="20" Height="20" Source="Images/file.png"/>
                         <ContentPresenter Content="File" />
                     </StackPanel>-->
-                        <Image Width="25" Height="30" Source="Images/file.png" ToolTip="File"/>
+                    <Image Name="FileIcon" Width="25" Height="30" ToolTip="File"/>
                 </MenuItem.Header>
-                <MenuItem Header="Load" Command="{x:Static hotk:HotkeyLoader.LoadCommand}"/>
-                <MenuItem Header="Save" Command="{x:Static hotk:HotkeyLoader.SaveCommand}"/>
+                <MenuItem Header="Load" Command="{x:Static conf:HotkeyConfigLoader.LoadCommand}"/>
+                <MenuItem Header="Save" Command="{x:Static conf:HotkeyConfigLoader.SaveCommand}"/>
             </MenuItem>
             <MenuItem>
                 <MenuItem.Header>
-                    <Image Width="25" Height="30" Source="Images/library.png" ToolTip="Add"/>
+                    <Image Width="25" Height="30" Name="AddIcon" ToolTip="Add"/>
                 </MenuItem.Header>
                 <MenuItem Header="Book" Click="MenuItem_Click"/>
                 <MenuItem Header="Author" Click="MenuItem_Click_2"/>
@@ -38,7 +38,7 @@
             </MenuItem>
             <MenuItem Name="PluginMenu" Visibility="Hidden">
                 <MenuItem.Header>
-                    <Image Width="25" Height="30" Source="Images/ext.png" ToolTip="Plugins"/>
+                    <Image Name="PluginsIcon" Width="25" Height="30" Source="Images/ext.png" ToolTip="Plugins"/>
                 </MenuItem.Header>
                 <MenuItem Header="Reset appearance" Click="MenuItem_Click_5"/>
             </MenuItem>
@@ -87,10 +87,10 @@
                                  RelativeSource={RelativeSource FindAncestor,
                                                AncestorType={x:Type ToolBarTray}}}">
                                 <Button Click="Button_Click_1" ToolTip="Edit">
-                                    <Image Source="Images/edit.png"/>
+                                    <Image Name="EditIcon"/>
                                 </Button>
                                 <Button Click="Button_Click" ToolTip="Delete">
-                                    <Image Source="Images/delete.png"/>
+                                    <Image Name="DeleteIcon"/>
                                 </Button>
                             </ToolBar>
                             <ToolBar HorizontalAlignment="Right" Name="BookPagination">
@@ -105,7 +105,7 @@
                                         </Style>
                                     </Button.Style>
                                     <Button.Content>
-                                        <Image Source="Images/carousel.png"/>
+                                        <Image Name="CarouselIcon"/>
                                     </Button.Content>
                                 </Button>
                             </ToolBar>
