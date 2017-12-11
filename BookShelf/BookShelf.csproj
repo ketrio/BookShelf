@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
@@ -58,6 +59,7 @@
     <Compile Include="Books.xaml.cs">
       <DependentUpon>Books.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Hotkeys\HotkeyLoader.cs" />
     <Compile Include="Models.cs" />
     <Compile Include="Pages\AuthorOverview.xaml.cs">
       <DependentUpon>AuthorOverview.xaml</DependentUpon>

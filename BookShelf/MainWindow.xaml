@@ -4,9 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookShelf"
+        xmlns:hotk="clr-namespace:BookShelf.Hotkeys"
         mc:Ignorable="d"
         Title="MainWindow" Height="460" Width="750"
         MinWidth="800" MinHeight="500">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static hotk:HotkeyLoader.SaveCommand}" Executed="CommandBinding_Executed"/>
+        <CommandBinding Command="{x:Static hotk:HotkeyLoader.LoadCommand}" Executed="CommandBinding_Executed_1"/>
+    </Window.CommandBindings>
     <Window.DataContext>
         <Binding Path="LibraryData" Source="{x:Static Application.Current}" UpdateSourceTrigger="PropertyChanged"/>
     </Window.DataContext>
