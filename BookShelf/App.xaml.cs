@@ -17,6 +17,7 @@ using System.Threading;
 using System.Windows.Media.Imaging;
 using BookShelf.PluginSystem;
 using System.Windows.Controls;
+using BookShelf.ConfigHelpers;
 
 namespace BookShelf
 {
@@ -193,14 +194,25 @@ namespace BookShelf
             }
         }
         LibraryData _libraryData;
-        public List<Type> plugins;
+        public List<Type> plugins = new List<Type>();
+        List<string> pluginDirs = ConfigurationManager.GetSection("pluginDirectories") as List<string>;
 
         async private void UpdatePlugins()
         {
             await Task.Delay(2000);
             await Task.Run(new Action(() => {
-                plugins = PluginLoader.Load(Path.GetFullPath("Plugins/"));
-                Dispatcher.InvokeAsync(new Action(() => UpdatePluginMenu()));
+                try
+                {
+                    foreach (var path in pluginDirs)
+                    {
+                        plugins.AddRange(PluginLoader.Load(Path.GetFullPath(path)));
+                    }
+                    Dispatcher.InvokeAsync(new Action(() => UpdatePluginMenu()));
+                }
+                catch
+                {
+                    MessageBox.Show("Bad config. Section - pluginDirectories");
+                }
             }));
         }
 
@@ -208,8 +220,7 @@ namespace BookShelf
         {
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                MenuItem PluginMenu = new MenuItem();
-                PluginMenu.Header = "Plugins";
+                MenuItem PluginMenu = (Current.MainWindow as MainWindow).PluginMenu;
 
                 MenuItem item;
 
@@ -224,12 +235,7 @@ namespace BookShelf
                     PluginMenu.Items.Add(item);
                 }
 
-                item = new MenuItem();
-                item.Header = ("Reset appearance");
-                item.Click += new RoutedEventHandler((obj, e) => Application.Current.Resources.Clear());
-                PluginMenu.Items.Add(item);
-
-                (Current.MainWindow as MainWindow).TopMenu.Items.Add(PluginMenu);
+                PluginMenu.Visibility = Visibility.Visible;
             }));
         }
 

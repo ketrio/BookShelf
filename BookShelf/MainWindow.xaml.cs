@@ -17,6 +17,8 @@ using System.Collections.ObjectModel;
 using Microsoft.Win32;
 using BookShelf.PluginSystem;
 using BookShelf.Pages;
+using System.Configuration;
+using BookShelf.ConfigLoaders;
 
 namespace BookShelf
 {
@@ -30,11 +32,20 @@ namespace BookShelf
         public MainWindow()
         {
             InitializeComponent();
-
+            InitIcons();
             //BookLoader = new PageLoader(AppCur.LibraryData.Books.ToList<object>(), typeof(BookOverview));
             //AuthorLoader = new PageLoader(AppCur.LibraryData.Authors.ToList<object>(), typeof(AuthorOverview));
             //PublisherLoader = new PageLoader(AppCur.LibraryData.Publishers.ToList<object>(), typeof(PublisherOverview));
-            
+        }
+
+        private void InitIcons()
+        {
+            FileIcon.Source = new BitmapImage(new Uri(IconConfigLoader.File));
+            AddIcon.Source = new BitmapImage(new Uri(IconConfigLoader.Add));
+            PluginsIcon.Source = new BitmapImage(new Uri(IconConfigLoader.Plugins));
+            EditIcon.Source = new BitmapImage(new Uri(IconConfigLoader.Edit));
+            DeleteIcon.Source = new BitmapImage(new Uri(IconConfigLoader.Delete));
+            CarouselIcon.Source = new BitmapImage(new Uri(IconConfigLoader.Carousel));
         }
 
         // Delete Book
@@ -146,7 +157,7 @@ namespace BookShelf
                 AuthorView.Visibility = Visibility.Visible;
         }
 
-        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        private void LoadFile()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
@@ -166,7 +177,12 @@ namespace BookShelf
             }
         }
 
-        private void MenuItem_Click_4(object sender, RoutedEventArgs e)
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            LoadFile();
+        }
+
+        private void SaveFile()
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             if (saveFileDialog.ShowDialog() == true)
@@ -182,6 +198,11 @@ namespace BookShelf
                         MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+        private void MenuItem_Click_4(object sender, RoutedEventArgs e)
+        {
+            SaveFile();
         }
 
         private void MenuItem_Click_5(object sender, RoutedEventArgs e)
@@ -412,6 +433,16 @@ namespace BookShelf
             var current = new AuthorOverview(AuthorGrid.SelectedValue);
             var window = new PaginalView(authorLoader, current);
             window.ShowDialog();
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            SaveFile();
+        }
+
+        private void CommandBinding_Executed_1(object sender, ExecutedRoutedEventArgs e)
+        {
+            LoadFile();
         }
     }
 }

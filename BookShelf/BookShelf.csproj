@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
@@ -58,6 +59,8 @@
     <Compile Include="Books.xaml.cs">
       <DependentUpon>Books.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConfigHelpers\DirectoriesSection.cs" />
+    <Compile Include="ConfigLoaders\HotkeyLoader.cs" />
     <Compile Include="Models.cs" />
     <Compile Include="Pages\AuthorOverview.xaml.cs">
       <DependentUpon>AuthorOverview.xaml</DependentUpon>
@@ -148,8 +151,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\photo.png" />
+    <Resource Include="Images\photo.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\ext.png" />
+    <Resource Include="Images\file.png" />
+    <Resource Include="Images\library.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\carousel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\edit.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

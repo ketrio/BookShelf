@@ -4,26 +4,44 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookShelf"
+        xmlns:conf="clr-namespace:BookShelf.ConfigLoaders"
         mc:Ignorable="d"
         Title="MainWindow" Height="460" Width="750"
         MinWidth="800" MinHeight="500">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static conf:HotkeyConfigLoader.SaveCommand}" Executed="CommandBinding_Executed"/>
+        <CommandBinding Command="{x:Static conf:HotkeyConfigLoader.LoadCommand}" Executed="CommandBinding_Executed_1"/>
+    </Window.CommandBindings>
     <Window.DataContext>
         <Binding Path="LibraryData" Source="{x:Static Application.Current}" UpdateSourceTrigger="PropertyChanged"/>
     </Window.DataContext>
     <DockPanel LastChildFill="True" Name="root">
-        <Menu DockPanel.Dock="Top" Name="TopMenu">
-            <MenuItem Header="File">
-                <MenuItem Header="Load" Click="MenuItem_Click_3"/>
-                <MenuItem Header="Save" Click="MenuItem_Click_4"/>
+        <Menu DockPanel.Dock="Top" Name="TopMenu" Height="30">
+            <MenuItem>
+                <MenuItem.Header>
+                    <!--<StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <Image Width="20" Height="20" Source="Images/file.png"/>
+                        <ContentPresenter Content="File" />
+                    </StackPanel>-->
+                    <Image Name="FileIcon" Width="25" Height="30" ToolTip="File"/>
+                </MenuItem.Header>
+                <MenuItem Header="Load" Command="{x:Static conf:HotkeyConfigLoader.LoadCommand}"/>
+                <MenuItem Header="Save" Command="{x:Static conf:HotkeyConfigLoader.SaveCommand}"/>
             </MenuItem>
-            <MenuItem Header="Add">
+            <MenuItem>
+                <MenuItem.Header>
+                    <Image Width="25" Height="30" Name="AddIcon" ToolTip="Add"/>
+                </MenuItem.Header>
                 <MenuItem Header="Book" Click="MenuItem_Click"/>
                 <MenuItem Header="Author" Click="MenuItem_Click_2"/>
                 <MenuItem Header="Publisher" Click="MenuItem_Click_1"/>
             </MenuItem>
-            <!--<MenuItem Name="PluginMenu" Header="Plugins">
+            <MenuItem Name="PluginMenu" Visibility="Hidden">
+                <MenuItem.Header>
+                    <Image Name="PluginsIcon" Width="25" Height="30" Source="Images/ext.png" ToolTip="Plugins"/>
+                </MenuItem.Header>
                 <MenuItem Header="Reset appearance" Click="MenuItem_Click_5"/>
-            </MenuItem>-->
+            </MenuItem>
         </Menu>
 
         <StatusBar DockPanel.Dock="Bottom" VerticalAlignment="Bottom"  Height="20">
@@ -42,7 +60,7 @@
 
                     <StackPanel>
                         <TextBox Height="25" Width="200" FontSize="16" TextChanged="SearchBox_TextChanged"/>
-                        <ListBox Name="BookGrid" Width="200" Height="375" SelectionChanged="BookGrid_SelectionChanged"
+                        <ListBox Name="BookGrid" Width="200" Height="360" SelectionChanged="BookGrid_SelectionChanged"
                           DockPanel.Dock="Top" ItemsSource="{Binding Books, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
@@ -68,11 +86,15 @@
                             <ToolBar Width="{Binding ActualWidth,
                                  RelativeSource={RelativeSource FindAncestor,
                                                AncestorType={x:Type ToolBarTray}}}">
-                                <Button Click="Button_Click_1">Edit</Button>
-                                <Button Click="Button_Click">Delete</Button>
+                                <Button Click="Button_Click_1" ToolTip="Edit">
+                                    <Image Name="EditIcon"/>
+                                </Button>
+                                <Button Click="Button_Click" ToolTip="Delete">
+                                    <Image Name="DeleteIcon"/>
+                                </Button>
                             </ToolBar>
                             <ToolBar HorizontalAlignment="Right" Name="BookPagination">
-                                <Button Content="Paginal view" Click="Button_Click_10">
+                                <Button Click="Button_Click_10" ToolTip="Paginal view">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}">
                                             <Style.Triggers>
@@ -82,6 +104,9 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Button.Style>
+                                    <Button.Content>
+                                        <Image Name="CarouselIcon"/>
+                                    </Button.Content>
                                 </Button>
                             </ToolBar>
                         </Grid>
@@ -107,7 +132,7 @@
 
                     <StackPanel>
                         <TextBox Height="25" FontSize="16" Width="200" TextChanged="TextBox_TextChanged"/>
-                        <ListBox Name="PublisherGrid" Width="200" Height="375" DockPanel.Dock="Top" SelectionChanged="PublisherGrid_SelectionChanged"
+                        <ListBox Name="PublisherGrid" Width="200" Height="360" DockPanel.Dock="Top" SelectionChanged="PublisherGrid_SelectionChanged"
                              ItemsSource="{ Binding Publishers}" SelectedIndex="0">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
@@ -169,7 +194,7 @@
 
                     <StackPanel>
                         <TextBox Height="25" FontSize="16" Width="200" TextChanged="TextBox_TextChanged_1"/>
-                        <ListBox Name="AuthorGrid" Height="375" Grid.Column="0" DockPanel.Dock="Top" SelectionChanged="AuthorGrid_SelectionChanged"
+                        <ListBox Name="AuthorGrid" Height="360" Grid.Column="0" DockPanel.Dock="Top" SelectionChanged="AuthorGrid_SelectionChanged"
                                  ItemsSource="{Binding Authors}" SelectedIndex="0" Width="200">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>

@@ -12,7 +12,7 @@ namespace BookShelf.PluginSystem
     {
         public static List<Type> Load(string path)
         {
-            if (!Directory.Exists(path)) throw new ArgumentException();
+            if (!Directory.Exists(path)) throw new ArgumentException("Plugin directory does not exist");
 
             var types = Directory.GetFiles(path, "*.dll")
                 .Select(dllPath => Assembly.Load(AssemblyName.GetAssemblyName(dllPath)))
