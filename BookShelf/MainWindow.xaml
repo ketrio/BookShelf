@@ -15,20 +15,75 @@
     <Window.DataContext>
         <Binding Path="LibraryData" Source="{x:Static Application.Current}" UpdateSourceTrigger="PropertyChanged"/>
     </Window.DataContext>
+    <Window.Resources>
+        <Style x:Key="MyButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <DockPanel LastChildFill="True" Name="root">
+        <!--TODO: Still need to abort defaul hover event-->
         <Menu DockPanel.Dock="Top" Name="TopMenu" Height="30">
-            <MenuItem>
+            <MenuItem Opacity="0.7">
+                <MenuItem.Triggers>
+                    <EventTrigger RoutedEvent="MenuItem.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                                                     Storyboard.TargetProperty="Opacity"
+                                                                     To="1"
+                                                                     Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="MenuItem.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                                                     Storyboard.TargetProperty="Opacity"
+                                                                     To="0.7"
+                                                                     Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </MenuItem.Triggers>
                 <MenuItem.Header>
-                    <!--<StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                        <Image Width="20" Height="20" Source="Images/file.png"/>
-                        <ContentPresenter Content="File" />
-                    </StackPanel>-->
                     <Image Name="FileIcon" Width="25" Height="30" ToolTip="File"/>
                 </MenuItem.Header>
                 <MenuItem Header="Load" Command="{x:Static conf:HotkeyConfigLoader.LoadCommand}"/>
                 <MenuItem Header="Save" Command="{x:Static conf:HotkeyConfigLoader.SaveCommand}"/>
             </MenuItem>
-            <MenuItem>
+            <MenuItem Opacity="0.7">
+                <MenuItem.Triggers>
+                    <EventTrigger RoutedEvent="MenuItem.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                                                     Storyboard.TargetProperty="Opacity"
+                                                                     To="1"
+                                                                     Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="MenuItem.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                                                     Storyboard.TargetProperty="Opacity"
+                                                                     To="0.7"
+                                                                     Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </MenuItem.Triggers>
                 <MenuItem.Header>
                     <Image Width="25" Height="30" Name="AddIcon" ToolTip="Add"/>
                 </MenuItem.Header>
@@ -36,7 +91,29 @@
                 <MenuItem Header="Author" Click="MenuItem_Click_2"/>
                 <MenuItem Header="Publisher" Click="MenuItem_Click_1"/>
             </MenuItem>
-            <MenuItem Name="PluginMenu" Visibility="Hidden">
+            <MenuItem Name="PluginMenu" Visibility="Hidden" Opacity="0.7">
+                <MenuItem.Triggers>
+                    <EventTrigger RoutedEvent="MenuItem.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                                                     Storyboard.TargetProperty="Opacity"
+                                                                     To="1"
+                                                                     Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="MenuItem.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                                                     Storyboard.TargetProperty="Opacity"
+                                                                     To="0.7"
+                                                                     Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </MenuItem.Triggers>
                 <MenuItem.Header>
                     <Image Name="PluginsIcon" Width="25" Height="30" Source="Images/ext.png" ToolTip="Plugins"/>
                 </MenuItem.Header>
@@ -88,9 +165,31 @@
                                                AncestorType={x:Type ToolBarTray}}}">
                                 <Button Click="Button_Click_1" ToolTip="Edit">
                                     <Image Name="EditIcon"/>
+                                    <Button.Triggers>
+                                        <EventTrigger RoutedEvent="Button.MouseMove">
+                                            <BeginStoryboard>
+                                                <Storyboard TargetProperty="Margin">
+                                                    <ThicknessAnimation 
+                                                         From="-1,-1,-1,-1" To="0,0,0,0"
+                                                         Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Button.Triggers>
                                 </Button>
                                 <Button Click="Button_Click" ToolTip="Delete">
                                     <Image Name="DeleteIcon"/>
+                                    <Button.Triggers>
+                                        <EventTrigger RoutedEvent="Button.MouseMove">
+                                            <BeginStoryboard>
+                                                <Storyboard TargetProperty="Margin">
+                                                    <ThicknessAnimation 
+                                                         From="-1,-1,-1,-1" To="0,0,0,0"
+                                                         Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Button.Triggers>
                                 </Button>
                             </ToolBar>
                             <ToolBar HorizontalAlignment="Right" Name="BookPagination">
@@ -104,6 +203,17 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Button.Style>
+                                    <Button.Triggers>
+                                        <EventTrigger RoutedEvent="Button.MouseMove">
+                                            <BeginStoryboard>
+                                                <Storyboard TargetProperty="Margin">
+                                                    <ThicknessAnimation 
+                                                         From="-1,-1,-1,-1" To="0,0,0,0"
+                                                         Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Button.Triggers>
                                     <Button.Content>
                                         <Image Name="CarouselIcon"/>
                                     </Button.Content>
