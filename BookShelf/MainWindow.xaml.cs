@@ -19,6 +19,7 @@ using BookShelf.PluginSystem;
 using BookShelf.Pages;
 using System.Configuration;
 using BookShelf.ConfigLoaders;
+using BookShelf.Graphics;
 
 namespace BookShelf
 {
@@ -443,6 +444,11 @@ namespace BookShelf
         private void CommandBinding_Executed_1(object sender, ExecutedRoutedEventArgs e)
         {
             LoadFile();
+        }
+
+        private void MenuItem_Click_14(object sender, RoutedEventArgs e)
+        {
+            new ChartWindow().Show();
         }
     }
 }

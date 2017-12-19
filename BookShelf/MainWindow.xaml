@@ -60,6 +60,7 @@
                 </MenuItem.Header>
                 <MenuItem Header="Load" Command="{x:Static conf:HotkeyConfigLoader.LoadCommand}"/>
                 <MenuItem Header="Save" Command="{x:Static conf:HotkeyConfigLoader.SaveCommand}"/>
+                <MenuItem Header="Chart" Click="MenuItem_Click_14"/>
             </MenuItem>
             <MenuItem Opacity="0.7">
                 <MenuItem.Triggers>
