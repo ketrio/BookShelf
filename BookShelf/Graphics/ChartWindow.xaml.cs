@@ -23,16 +23,17 @@ namespace BookShelf.Graphics
     {
         private static Duration animationDuration = new Duration(new TimeSpan(0, 0, 0, 0, 450));
 
-        private List<int> chartData;
+        //private List<int> chartData;
+        private List<int> chartData = new List<int> { 2, 3, 5, 9, 1, 6, 8, 7, 9, 3, 3, 1 };
         private List<Tuple<Shape, Storyboard>> storyElements = 
             new List<Tuple<Shape, Storyboard>>();
 
         public ChartWindow(List<Book> list)
         {
             InitializeComponent();
-            chartData = Enumerable.Range(1, 12).ToList<int>()
-                        .Select((e, i) => list.Where(book => book.PublishDate.Month == i + 1).Count())
-                        .ToList<int>();
+            //chartData = Enumerable.Range(1, 12).ToList<int>()
+            //            .Select((e, i) => list.Where(book => book.PublishDate.Month == i + 1).Count())
+            //            .ToList<int>();
             Visualize();
         }
 
@@ -48,6 +49,7 @@ namespace BookShelf.Graphics
                 if (prevPoint != new Point())
                 {
                     initLine(i, e, prevPoint);
+                    //initPoly(i, e, prevPoint);
                 }
                 prevPoint = new Point(40 + i * 58.5 + 5, 295 - e * 30 + 5);
 
@@ -109,17 +111,14 @@ namespace BookShelf.Graphics
 
         //    poly.Points = new PointCollection(new List<Point>
         //                {
-        //                    //new Point(point.X, point.Y),
-        //                    //new Point(40 + index * 58.5 + 5, 295 - element * 30 + 5),
-        //                    firstUpper,
-        //                    secondUpper,
+        //                    new Point(point.X, point.Y),
+        //                    new Point(40 + index * 58.5 + 5, 295 - element * 30 + 5),
+        //                    //firstUpper,
+        //                    //secondUpper,
         //                    new Point(40 + index * 58.5 + 5, 300),
         //                    new Point(point.X, 300),
         //                });
         //    ChartCanvas.Children.Add(poly);
-
-        //    poly.
-
 
         //    //Storyboard sb = new Storyboard();
         //    //DoubleAnimation da = new DoubleAnimation(firstUpper.Y, point.Y, animationDuration);
