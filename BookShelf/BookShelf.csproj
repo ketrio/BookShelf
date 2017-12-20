@@ -61,6 +61,9 @@
     </Compile>
     <Compile Include="ConfigHelpers\DirectoriesSection.cs" />
     <Compile Include="ConfigLoaders\HotkeyLoader.cs" />
+    <Compile Include="Graphics\ChartWindow.xaml.cs">
+      <DependentUpon>ChartWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models.cs" />
     <Compile Include="Pages\AuthorOverview.xaml.cs">
       <DependentUpon>AuthorOverview.xaml</DependentUpon>
@@ -85,6 +88,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Books.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Graphics\ChartWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

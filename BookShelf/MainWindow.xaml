@@ -15,30 +15,96 @@
     <Window.DataContext>
         <Binding Path="LibraryData" Source="{x:Static Application.Current}" UpdateSourceTrigger="PropertyChanged"/>
     </Window.DataContext>
+    <Window.Resources>
+    </Window.Resources>
     <DockPanel LastChildFill="True" Name="root">
+        <!--TODO: Still need to abort defaul hover event-->
         <Menu DockPanel.Dock="Top" Name="TopMenu" Height="30">
-            <MenuItem>
+            <MenuItem Opacity="0.7">
+                <MenuItem.Triggers>
+                    <EventTrigger RoutedEvent="MenuItem.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="Opacity"
+                                    To="1"
+                                    Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="MenuItem.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                                                     Storyboard.TargetProperty="Opacity"
+                                                                     To="0.7"
+                                                                     Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </MenuItem.Triggers>
                 <MenuItem.Header>
-                    <!--<StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                        <Image Width="20" Height="20" Source="Images/file.png"/>
-                        <ContentPresenter Content="File" />
-                    </StackPanel>-->
-                    <Image Name="FileIcon" Width="25" Height="30" ToolTip="File"/>
+                    <Image Name="FileIcon" Width="25" Height="30" ToolTip="File" Source="{x:Static conf:IconConfigLoader.File}"/>
                 </MenuItem.Header>
                 <MenuItem Header="Load" Command="{x:Static conf:HotkeyConfigLoader.LoadCommand}"/>
                 <MenuItem Header="Save" Command="{x:Static conf:HotkeyConfigLoader.SaveCommand}"/>
+                <MenuItem Header="Chart" Click="MenuItem_Click_14"/>
             </MenuItem>
-            <MenuItem>
+            <MenuItem Opacity="0.7">
+                <MenuItem.Triggers>
+                    <EventTrigger RoutedEvent="MenuItem.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                                                     Storyboard.TargetProperty="Opacity"
+                                                                     To="1"
+                                                                     Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="MenuItem.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                                                     Storyboard.TargetProperty="Opacity"
+                                                                     To="0.7"
+                                                                     Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </MenuItem.Triggers>
                 <MenuItem.Header>
-                    <Image Width="25" Height="30" Name="AddIcon" ToolTip="Add"/>
+                    <Image Width="25" Height="30" Name="AddIcon" ToolTip="Add" Source="{x:Static conf:IconConfigLoader.Add}"/>
                 </MenuItem.Header>
                 <MenuItem Header="Book" Click="MenuItem_Click"/>
                 <MenuItem Header="Author" Click="MenuItem_Click_2"/>
                 <MenuItem Header="Publisher" Click="MenuItem_Click_1"/>
             </MenuItem>
-            <MenuItem Name="PluginMenu" Visibility="Hidden">
+            <MenuItem Name="PluginMenu" Visibility="Hidden" Opacity="0.7">
+                <MenuItem.Triggers>
+                    <EventTrigger RoutedEvent="MenuItem.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                                                     Storyboard.TargetProperty="Opacity"
+                                                                     To="1"
+                                                                     Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="MenuItem.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                                                     Storyboard.TargetProperty="Opacity"
+                                                                     To="0.7"
+                                                                     Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </MenuItem.Triggers>
                 <MenuItem.Header>
-                    <Image Name="PluginsIcon" Width="25" Height="30" Source="Images/ext.png" ToolTip="Plugins"/>
+                    <Image Name="PluginsIcon" Width="25" Height="30" Source="{x:Static conf:IconConfigLoader.Plugins}" ToolTip="Plugins" />
                 </MenuItem.Header>
                 <MenuItem Header="Reset appearance" Click="MenuItem_Click_5"/>
             </MenuItem>
@@ -51,6 +117,32 @@
         </StatusBar>
 
         <TabControl TabStripPlacement="Left">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="TextBlock.Foreground" Value="White"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Gainsboro" CornerRadius="4,4,0,0" Margin="2,0">
+                                    <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="Red" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Border" Property="Background" Value="Gray" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
             <TabItem Header="Books">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -87,10 +179,32 @@
                                  RelativeSource={RelativeSource FindAncestor,
                                                AncestorType={x:Type ToolBarTray}}}">
                                 <Button Click="Button_Click_1" ToolTip="Edit">
-                                    <Image Name="EditIcon"/>
+                                    <Image Name="EditIcon" Source="{x:Static conf:IconConfigLoader.Edit}"/>
+                                    <Button.Triggers>
+                                        <EventTrigger RoutedEvent="Button.MouseMove">
+                                            <BeginStoryboard>
+                                                <Storyboard TargetProperty="Margin">
+                                                    <ThicknessAnimation 
+                                                         From="-1,-1,-1,-1" To="0,0,0,0"
+                                                         Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Button.Triggers>
                                 </Button>
                                 <Button Click="Button_Click" ToolTip="Delete">
-                                    <Image Name="DeleteIcon"/>
+                                    <Image Name="DeleteIcon" Source="{x:Static conf:IconConfigLoader.Delete}"/>
+                                    <Button.Triggers>
+                                        <EventTrigger RoutedEvent="Button.MouseMove">
+                                            <BeginStoryboard>
+                                                <Storyboard TargetProperty="Margin">
+                                                    <ThicknessAnimation 
+                                                         From="-1,-1,-1,-1" To="0,0,0,0"
+                                                         Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Button.Triggers>
                                 </Button>
                             </ToolBar>
                             <ToolBar HorizontalAlignment="Right" Name="BookPagination">
@@ -98,14 +212,25 @@
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}">
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Books.Count}" Value="0">
+                                                <DataTrigger Binding="{Binding Publishers.Count}" Value="0">
                                                     <Setter Property="IsEnabled" Value="False"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </Button.Style>
+                                    <Button.Triggers>
+                                        <EventTrigger RoutedEvent="Button.MouseMove">
+                                            <BeginStoryboard>
+                                                <Storyboard TargetProperty="Margin">
+                                                    <ThicknessAnimation 
+                                                         From="-1,-1,-1,-1" To="0,0,0,0"
+                                                         Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Button.Triggers>
                                     <Button.Content>
-                                        <Image Name="CarouselIcon"/>
+                                        <Image Name="CarouselIcon" Source="{x:Static conf:IconConfigLoader.Carousel}"/>
                                     </Button.Content>
                                 </Button>
                             </ToolBar>
@@ -155,20 +280,60 @@
                             <ToolBar Width="{Binding ActualWidth,
                                  RelativeSource={RelativeSource FindAncestor,
                                                AncestorType={x:Type ToolBarTray}}}">
-                                <Button Click="Button_Click_2">Edit</Button>
-                                <Button Click="Button_Click_3">Delete</Button>
+                                <Button Click="Button_Click_2" ToolTip="Edit">
+                                    <Image Source="{x:Static conf:IconConfigLoader.Edit}"/>
+                                    <Button.Triggers>
+                                        <EventTrigger RoutedEvent="Button.MouseMove">
+                                            <BeginStoryboard>
+                                                <Storyboard TargetProperty="Margin">
+                                                    <ThicknessAnimation 
+                                                         From="-1,-1,-1,-1" To="0,0,0,0"
+                                                         Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Button.Triggers>
+                                </Button>
+                                <Button Click="Button_Click_3" ToolTip="Delete">
+                                    <Image Source="{x:Static conf:IconConfigLoader.Delete}"/>
+                                    <Button.Triggers>
+                                        <EventTrigger RoutedEvent="Button.MouseMove">
+                                            <BeginStoryboard>
+                                                <Storyboard TargetProperty="Margin">
+                                                    <ThicknessAnimation 
+                                                         From="-1,-1,-1,-1" To="0,0,0,0"
+                                                         Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Button.Triggers>
+                                </Button>
                             </ToolBar>
                             <ToolBar HorizontalAlignment="Right">
-                                <Button Content="Paginal view" Click="Button_Click_6">
+                                <Button Click="Button_Click_6" ToolTip="Paginal view">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}">
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Publishers.Count}" Value="0">
+                                                <DataTrigger Binding="{Binding Books.Count}" Value="0">
                                                     <Setter Property="IsEnabled" Value="False"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </Button.Style>
+                                    <Button.Triggers>
+                                        <EventTrigger RoutedEvent="Button.MouseMove">
+                                            <BeginStoryboard>
+                                                <Storyboard TargetProperty="Margin">
+                                                    <ThicknessAnimation 
+                                                         From="-1,-1,-1,-1" To="0,0,0,0"
+                                                         Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Button.Triggers>
+                                    <Button.Content>
+                                        <Image Source="{x:Static conf:IconConfigLoader.Carousel}"/>
+                                    </Button.Content>
                                 </Button>
                             </ToolBar>
                         </Grid>
@@ -215,11 +380,37 @@
                             <ToolBar Width="{Binding ActualWidth,
                                  RelativeSource={RelativeSource FindAncestor,
                                                AncestorType={x:Type ToolBarTray}}}">
-                                <Button Click="Button_Click_4">Edit</Button>
-                                <Button Click="Button_Click_5">Delete</Button>
+                                <Button Click="Button_Click_4" ToolTip="Edit">
+                                    <Image Source="{x:Static conf:IconConfigLoader.Edit}"/>
+                                    <Button.Triggers>
+                                        <EventTrigger RoutedEvent="Button.MouseMove">
+                                            <BeginStoryboard>
+                                                <Storyboard TargetProperty="Margin">
+                                                    <ThicknessAnimation 
+                                                         From="-1,-1,-1,-1" To="0,0,0,0"
+                                                         Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Button.Triggers>
+                                </Button>
+                                <Button Click="Button_Click_5" ToolTip="Delete">
+                                    <Image Source="{x:Static conf:IconConfigLoader.Delete}"/>
+                                    <Button.Triggers>
+                                        <EventTrigger RoutedEvent="Button.MouseMove">
+                                            <BeginStoryboard>
+                                                <Storyboard TargetProperty="Margin">
+                                                    <ThicknessAnimation 
+                                                         From="-1,-1,-1,-1" To="0,0,0,0"
+                                                         Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Button.Triggers>
+                                </Button>
                             </ToolBar>
                             <ToolBar HorizontalAlignment="Right">
-                                <Button Content="Paginal view" Click="Button_Click_7">
+                                <Button Click="Button_Click_7" ToolTip="Paginal view">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}">
                                             <Style.Triggers>
@@ -229,6 +420,20 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Button.Style>
+                                    <Button.Triggers>
+                                        <EventTrigger RoutedEvent="Button.MouseMove">
+                                            <BeginStoryboard>
+                                                <Storyboard TargetProperty="Margin">
+                                                    <ThicknessAnimation 
+                                                         From="-1,-1,-1,-1" To="0,0,0,0"
+                                                         Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Button.Triggers>
+                                    <Button.Content>
+                                        <Image Source="{x:Static conf:IconConfigLoader.Carousel}"/>
+                                    </Button.Content>
                                 </Button>
                             </ToolBar>
                         </Grid>

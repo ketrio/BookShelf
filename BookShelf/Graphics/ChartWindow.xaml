@@ -1,0 +1,69 @@
+﻿<Window x:Class="BookShelf.Graphics.ChartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookShelf.Graphics"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        ContentRendered="Window_ContentRendered"
+        Title="ChartWindow" Height="400" Width="800">
+    <StackPanel>
+        <DockPanel>
+            <StackPanel Orientation="Vertical" Margin="0 15 0 0">
+                <Label HorizontalAlignment="Right" Content="9" Margin="0 0 0 4.5"/>
+                <Label HorizontalAlignment="Right" Content="8" Margin="0 0 0 4.5"/>
+                <Label HorizontalAlignment="Right" Content="7" Margin="0 0 0 4.5"/>
+                <Label HorizontalAlignment="Right" Content="6" Margin="0 0 0 4.5"/>
+                <Label HorizontalAlignment="Right" Content="5" Margin="0 0 0 4.5"/>
+                <Label HorizontalAlignment="Right" Content="4" Margin="0 0 0 4.5"/>
+                <Label HorizontalAlignment="Right" Content="3" Margin="0 0 0 4.5"/>
+                <Label HorizontalAlignment="Right" Content="2" Margin="0 0 0 4.5"/>
+                <Label HorizontalAlignment="Right" Content="1" Margin="0 0 0 4.5"/>
+                <Label HorizontalAlignment="Right" Content="0" Margin="0 0 0 4.5"/>
+            </StackPanel>
+            <Canvas Name="ChartCanvas" Height="320" DockPanel.Dock="Right" Margin="13 0 0 0" Background="Transparent">
+                <Line X1="0" X2="720" Y1="30" Y2="30" Stroke="Gray"/>
+                <Line X1="0" X2="720" Y1="60" Y2="60" Stroke="Gray"/>
+                <Line X1="0" X2="720" Y1="90" Y2="90" Stroke="Gray"/>
+                <Line X1="0" X2="720" Y1="120" Y2="120" Stroke="Gray"/>
+                <Line X1="0" X2="720" Y1="150" Y2="150" Stroke="Gray"/>
+                <Line X1="0" X2="720" Y1="180" Y2="180" Stroke="Gray"/>
+                <Line X1="0" X2="720" Y1="210" Y2="210" Stroke="Gray"/>
+                <Line X1="0" X2="720" Y1="240" Y2="240" Stroke="Gray"/>
+                <Line X1="0" X2="720" Y1="270" Y2="270" Stroke="Gray"/>
+                <Line X1="0" X2="720" Y1="300" Y2="300" Stroke="Gray"/>
+                <!--<Ellipse Width="10" Height="10" Fill="Blue" Margin="50 50"/>-->
+            </Canvas>
+        </DockPanel>
+        <Grid Margin="50 0 35 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="0" Content="Jan"/>
+            <Label VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="1" Content="Feb"/>
+            <Label VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="2" Content="Mar"/>
+            <Label VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="3" Content="Apr"/>
+            <Label VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="4" Content="May"/>
+            <Label VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="5" Content="Jun"/>
+            <Label VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="6" Content="Jul"/>
+            <Label VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="7" Content="Aug"/>
+            <Label VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="8" Content="Sep"/>
+            <Label VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="9" Content="Oct"/>
+            <Label VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="10" Content="Nov"/>
+            <Label VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="11" Content="Dec"/>
+        </Grid>
+    </StackPanel>
+</Window>

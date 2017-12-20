@@ -19,6 +19,7 @@ using BookShelf.PluginSystem;
 using BookShelf.Pages;
 using System.Configuration;
 using BookShelf.ConfigLoaders;
+using BookShelf.Graphics;
 
 namespace BookShelf
 {
@@ -32,20 +33,9 @@ namespace BookShelf
         public MainWindow()
         {
             InitializeComponent();
-            InitIcons();
             //BookLoader = new PageLoader(AppCur.LibraryData.Books.ToList<object>(), typeof(BookOverview));
             //AuthorLoader = new PageLoader(AppCur.LibraryData.Authors.ToList<object>(), typeof(AuthorOverview));
             //PublisherLoader = new PageLoader(AppCur.LibraryData.Publishers.ToList<object>(), typeof(PublisherOverview));
-        }
-
-        private void InitIcons()
-        {
-            FileIcon.Source = new BitmapImage(new Uri(IconConfigLoader.File));
-            AddIcon.Source = new BitmapImage(new Uri(IconConfigLoader.Add));
-            PluginsIcon.Source = new BitmapImage(new Uri(IconConfigLoader.Plugins));
-            EditIcon.Source = new BitmapImage(new Uri(IconConfigLoader.Edit));
-            DeleteIcon.Source = new BitmapImage(new Uri(IconConfigLoader.Delete));
-            CarouselIcon.Source = new BitmapImage(new Uri(IconConfigLoader.Carousel));
         }
 
         // Delete Book
@@ -443,6 +433,11 @@ namespace BookShelf
         private void CommandBinding_Executed_1(object sender, ExecutedRoutedEventArgs e)
         {
             LoadFile();
+        }
+
+        private void MenuItem_Click_14(object sender, RoutedEventArgs e)
+        {
+            new ChartWindow(AppCur.LibraryData.Books.ToList<Book>()).ShowDialog();
         }
     }
 }
