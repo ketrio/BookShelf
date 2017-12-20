@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:BookShelf.Graphics"
         mc:Ignorable="d"
         ResizeMode="NoResize"
+        ContentRendered="Window_ContentRendered"
         Title="ChartWindow" Height="400" Width="800">
     <StackPanel>
         <DockPanel>
