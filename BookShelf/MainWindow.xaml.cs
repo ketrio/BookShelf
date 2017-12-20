@@ -448,7 +448,7 @@ namespace BookShelf
 
         private void MenuItem_Click_14(object sender, RoutedEventArgs e)
         {
-            new ChartWindow().Show();
+            new ChartWindow(AppCur.LibraryData.Books.ToList<Book>()).Show();
         }
     }
 }
